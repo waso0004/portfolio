@@ -1,0 +1,48 @@
+:root {
+    --primary: #0d6efd;
+    --secondary: #6c757d;
+}
+
+.body {
+    font-family: "Roboto", sans-serif;
+}
+
+.offcanvas {
+    --bs-offcanvas-height: 15vh;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+}
+
+.nav-link {
+    padding-bottom: 2px;
+}
+.navbar-toggler {
+    color: white;
+    font-size: 1rem;
+    border: none;
+}
+
+.navbar-toggler-icon {
+    width: 1.5rem;
+    background-image: url(../images/hamburger-menu.svg);
+}
+
+.active {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; 
+    width: 50%;
+    height: 2px; 
+    background-color: white; 
+}
+
