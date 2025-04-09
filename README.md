@@ -62,10 +62,11 @@ I prioritized creating a clean and modern design that reflects my personal style
 
 ### Tools:
 - [Google Fonts](https://fonts.google.com/) - For importing fonts.
-- [Image Optimization Tools](https://tinypng.com/) - Used to compress images for faster loading.
+- [Image Optimization Tools](https://classic.derivv.com/) - Used to compress images for faster loading.
+- [Figma](https://www.figma.com/) - Used for creating the initial wireframes and prototypes.
 
 ---
 
 This portfolio represents my journey as a designer and developer, showcasing my ability to create functional, visually appealing, and user-friendly web experiences.
 
-https://www.figma.com/design/cCyQPJAQAAVnwSVJKIGjeR/Portfolio-Prototype-Final?node-id=0-1&t=AhbJ9TyhS4ZcMxsh-1
+Figma Prototype: [View Prototype](https://www.figma.com/design/cCyQPJAQAAVnwSVJKIGjeR/Portfolio-Prototype-Final?node-id=0-1&t=AhbJ9TyhS4ZcMxsh-1)

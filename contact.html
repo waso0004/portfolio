@@ -108,7 +108,13 @@
                 <div class="row justify-content-center">
                     <!-- Image with overlay text -->
                     <div class="col-md-6 position-relative overflow-hidden p-0 d-none d-md-block">
-                        <img src="images/contact.jpg" alt="Contact Image" class="img-fluid w-100 h-100 object-fit-cover" itemprop="image">
+                        <!-- Responsive image with multiple sources for different screen sizes -->
+                        <picture>
+                            <source srcset="images/contact.jpg" media="(min-width: 992px)">
+                            <source srcset="images/contact-x640.jpg" media="(min-width: 768px)">
+                            <source srcset="images/contact-x960.jpg" media="(min-width: 576px)">
+                            <img src="images/contact.jpg" alt="Contact Image" class="img-fluid w-100 h-100 object-fit-cover" itemprop="image">
+                        </picture>
                         <div class="text-left position-absolute bottom-0 start-0 p-5">
                             <!-- Overlay text -->
                             <p class="text-uppercase mb-0 fw-light text-white small">Design. Capture.</p>
