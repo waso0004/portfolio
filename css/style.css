@@ -1,32 +1,26 @@
 :root {
-    --primary: #0d6efd;
-    --secondary: #6c757d;
+    --primary: #7EB5BE;
+    --secondary: #005F6B;
+    --text-color: #F3F7F6;
+    --text-color-secondary: #787D81;
+    --backgorund-color: black;
+    --background-color-secondary: #111111;
 }
 
-.body {
+body {
     font-family: "Roboto", sans-serif;
 }
 
-.offcanvas {
-    --bs-offcanvas-height: 15vh;
-}
-
-.navbar-brand {
-    font-size: 1.5rem;
-}
-
-.nav-link {
-    padding-bottom: 2px;
-}
-.navbar-toggler {
-    color: white;
-    font-size: 1rem;
-    border: none;
+.bg-dark {
+    background-color: var(--background-color-secondary) !important;
 }
 
 .navbar-toggler-icon {
-    width: 1.5rem;
     background-image: url(../images/hamburger-menu.svg);
+}
+
+.offcanvas  {
+    --bs-offcanvas-height: 15vh;
 }
 
 .active {
@@ -36,13 +30,48 @@
     align-items: center;
     text-align: center;
 }
-
 .active::after {
     content: '';
     position: absolute;
     bottom: -1px; 
     width: 50%;
     height: 2px; 
-    background-color: white; 
+    background-color: var(--text-color); 
+}
+
+.text-primary {
+    color: var(--primary) !important;
+}
+
+.text-secondary {
+    color: var(--secondary) !important;
+}
+
+.text-color-secondary {
+    color: var(--text-color-secondary) !important;
+}
+
+.sub-heading {
+    font-family: "Roboto Mono";
+    color: rgba(0, 0, 0, 0);
+    -webkit-text-stroke: 1px white;
+}
+
+.main-heading {
+    font-family: "Roboto Mono";
+}
+
+.main-banner {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url(../images/main-banner.jpg);
+    background-size: cover;
+    background-position: center 30%;
+    background-repeat: no-repeat;
+}
+
+
+@media (min-width: 992px) {
+    .active::after {
+        width: 65%;
+    }
 }
 
