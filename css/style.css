@@ -39,11 +39,15 @@ body {
     background-color: var(--text-color); 
 }
 
-.text-primary {
+.bg-primary {
+    background-color: var(--secondary) !important;
+}
+
+.primary {
     color: var(--primary) !important;
 }
 
-.text-secondary {
+.secondary {
     color: var(--secondary) !important;
 }
 
@@ -67,7 +71,6 @@ body {
     background-position: center 30%;
     background-repeat: no-repeat;
 }
-
 
 @media (min-width: 992px) {
     .active::after {

@@ -15,7 +15,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="bg-black">
     <header>
         <!-- Full-width dark background for the header -->
         <div class="container-fluid bg-dark">
@@ -27,7 +27,7 @@
                         <a class="navbar-brand fw-bold fs-2 m-0 p-0" href="index.html">K-</a>
                         
                         <!-- Navbar toggler for smaller screens -->
-                        <button class="navbar-toggler d-flex align-items-center text-white p-0 border-0 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
+                        <button class="navbar-toggler d-flex align-items-center text-white p-0 border-0 d-lg-none mt-3 mb-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
                             <span class="navbar-toggler-icon fs-6 p-0"></span>
                             <span class="ms-2 fw-bold h6 m-0 ps-2">Menu</span>
                         </button>
@@ -52,7 +52,7 @@
                     <div class="offcanvas offcanvas-top bg-dark text-white d-lg-none" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
                         <div class="offcanvas-header">
                             <!-- Offcanvas title and close button -->
-                            <h5 class="offcanvas-title mx-auto" id="offcanvasTopLabel"></h5>
+                            <div class="offcanvas-title mx-auto" id="offcanvasTopLabel"></div>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
                         <div class="offcanvas-body d-flex justify-content-center p-0">
@@ -76,7 +76,52 @@
     </header>
     
     <main>
-        <!-- Add your About page content here -->
+        <section class="bg-white">
+            <div class="container pt-5 pb-5">
+                <div class=" container-fluid row justify-content-center py-5">
+                    <div class="col-md-8 text-left ps-4 pe-4">
+                        <p class="text-uppercase secondary mb-2">Contact Us</p>
+                        <h1 class="fw-bold display-6 mb-0">Do you have a question<br>or want to collaborate?</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="bg-black text-white py-5">
+            <div class="container">
+            <div class="row justify-content-center">
+                    <div class="col-md-6 position-relative overflow-hidden p-0 d-none d-md-block">
+                        <img src="images/contact.jpg" alt="Contact Image" class="img-fluid w-100 h-100 object-fit-cover">
+                        <!-- Text overlay on the image -->
+                        <div class="text-left position-absolute bottom-0 start-0 p-5">
+                            <p class="text-uppercase mb-0 fw-light text-white small">Design. Capture.</p>
+                            <p class="display-6 mb-0 fw-bold text-white">Inspire.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 p-5">
+                        <h2 class="text-uppercase fw-light text-white fs-5 mb-5 small">Let's Connect!</h2>
+                        <form class="form-container bg-white text-dark p-4 rounded" action="mailto:krisada313@gmail.com" method="post" enctype="text/plain">
+                            <div class="mb-3">
+                                <label for="fname" class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="fname" name="FullName" placeholder="e.g. John Doe" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Mail</label>
+                                <input type="email" class="form-control" id="email" name="Email" placeholder="e.g. jdoe@email.com" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="subject" class="form-label">Subject</label>
+                                <input type="text" class="form-control" id="subject" name="Subject" placeholder="e.g. Photoshoot">
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Messages</label>
+                                <textarea class="form-control" id="message" name="Message" rows="4" placeholder="Leave us a message..."></textarea>
+                            </div>
+                            <button type="submit" class="rounded-pill btn bg-primary text-white ps-3 pe-3">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
     
     <footer id="footer" class="bg-dark text-center text-white py-3">
@@ -88,7 +133,7 @@
                 </div>
                 <!-- Footer copyright -->
                 <div class="col-md-6">
-                    <p class="text-color-secondary">&copy; 2025 <span class="text-primary">Krisada Wasoontarjaroen</span> | All Right Reserved</p>
+                    <p class="text-color-secondary">&copy; 2025 <span class="primary">Krisada Wasoontarjaroen</span> | All Right Reserved</p>
                 </div>
             </div>
         </div>

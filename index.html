@@ -15,7 +15,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="bg-black">
     <header>
         <!-- Full-width dark background for the header -->
         <div class="container-fluid bg-dark">
@@ -27,7 +27,7 @@
                         <a class="navbar-brand fw-bold fs-2 m-0 p-0" href="index.html">K-</a>
                         
                         <!-- Navbar toggler for smaller screens -->
-                        <button class="navbar-toggler d-flex align-items-center text-white p-0 border-0 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
+                        <button class="navbar-toggler d-flex align-items-center text-white p-0 border-0 d-lg-none mt-3 mb-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
                             <span class="navbar-toggler-icon fs-6 p-0"></span>
                             <span class="ms-2 fw-bold h6 m-0 ps-2">Menu</span>
                         </button>
@@ -52,7 +52,7 @@
                     <div class="offcanvas offcanvas-top bg-dark text-white d-lg-none" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
                         <div class="offcanvas-header">
                             <!-- Offcanvas title and close button -->
-                            <h5 class="offcanvas-title mx-auto" id="offcanvasTopLabel"></h5>
+                            <div class="offcanvas-title mx-auto" id="offcanvasTopLabel"></div>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
                         <div class="offcanvas-body d-flex justify-content-center p-0">
@@ -78,26 +78,26 @@
         <!-- Main banner section -->
         <section class="bg-black">
             <div class="container-fluid h-25 main-banner sticky-top bg-dark">
-                <div class="container-sm d-flex flex-column justify-content-center align-items-center text-left vh-100 text-white">
+                <div class="container-sm d-flex flex-column justify-content-center align-items-center text-left vh-100 text-white position-relative">
                     <div class="container-sm">
-                        <!-- Introduction text -->
-                        <p class="text-uppercase fw-bold mb-2 text-primary">Krisada Wasoontarjaroen</p>
-                        <h1>
-                            <span class="sub-heading display-2 fw-bold d-block mt-5">Framing</span>
-                            <span class="main-heading display-1 fw-bold d-block mt-3">creativity</span>
-                        </h1>
-                        <p class="text-color-secondary mt-5 mb-5">Interactive Media Design student with a passion for photography.</p>
+                    <!-- Introduction text -->
+                    <h1 class="h6 text-uppercase mb-2 primary small">Krisada Wasoontarjaroen</h1>
+                    <div>
+                        <span class="sub-heading display-2 fw-bold d-block mt-5">Framing</span>
+                        <span class="main-heading display-1 fw-bold d-block mt-3">creativity</span>
+                    </div>
+                    <p class="text-color-secondary mt-5 mb-5 small">Interactive Media Design student with a passion for photography.</p>
                     </div>
                     <!-- Call-to-action button -->
-                    <a href="#" class="rounded-pill btn btn-outline-light btn-lg bg-white text-secondary">View My Projects</a>
-                    <div class="mt-5">
-                        <!-- Downward arrow icon -->
-                        <a href="#footer" class="text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
-                            </svg>
-                        </a>
+                    <div class="mt-5 mb-3">
+                    <a href="https://krisadawasoontarajaroen.free.nf/" class="rounded-pill btn btn-outline-light btn-lg bg-white secondary" target="_blank" rel="noopener noreferrer">View My Projects</a>
                     </div>
+                    <!-- Footer arrow icon -->
+                    <a href="#footer" class="text-white position-absolute" style="bottom: 10vh;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
+                    </svg>
+                    </a>
                 </div>
             </div>
         </section>
@@ -108,8 +108,8 @@
                 <div class="row mt-4 mb-5">
                     <!-- Mission statement -->
                     <div class="col-md-6">
-                        <div class="text-uppercase text-primary fw-bold mb-3">My Mission</div>
-                        <h2 class="fw-bold mb-4">Explore my work and discover how I combine art, design, and storytelling to create engaging visual experiences.</h2>
+                        <div class="text-uppercase secondary fw-bold mb-3">My Mission</div>
+                        <h2 class="fw-bold mb-4 fst-italic">Explore my work and discover how I combine art, design, and storytelling to create engaging visual experiences.</h2>
                     </div>
                     <div class="col-md-6">
                         <!-- Mission description -->
@@ -130,7 +130,7 @@
                 </div>
                 <!-- Footer copyright -->
                 <div class="col-md-6">
-                    <p class="text-color-secondary">&copy; 2025 <span class="text-primary">Krisada Wasoontarjaroen</span> | All Right Reserved</p>
+                    <p class="text-color-secondary">&copy; 2025 <span class="primary">Krisada Wasoontarjaroen</span> | All Right Reserved</p>
                 </div>
             </div>
         </div>
