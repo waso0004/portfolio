@@ -83,8 +83,7 @@ body {
 
 /* Style for the main banner background */
 .main-banner {
-	background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)),
-		url(../images/main-banner.jpg); /* Add a dark overlay on the banner image */
+	background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url(../images/main-banner.jpg); /* Add a dark overlay on the banner image */
 	background-size: cover; /* Ensure the image covers the entire container */
 	background-position: center 30%; /* Position the image */
 	background-repeat: no-repeat; /* Prevent the image from repeating */
