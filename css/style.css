@@ -3,7 +3,7 @@
     --secondary: #005F6B;
     --text-color: #F3F7F6;
     --text-color-secondary: #787D81;
-    --backgorund-color: black;
+    --backgorund-color: rgba(0, 0, 0, 0);
     --background-color-secondary: #111111;
 }
 
@@ -57,8 +57,8 @@ body {
 
 .sub-heading {
     font-family: "Roboto Mono";
-    color: rgba(0, 0, 0, 0);
-    -webkit-text-stroke: 1px white;
+    color: var(--backgorund-color);
+    -webkit-text-stroke: 1px var(--text-color);
 }
 
 .main-heading {

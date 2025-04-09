@@ -14,6 +14,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
+    <!-- Hover.css -->
+    <link href="css/hover-min.css" rel="stylesheet">
 </head>
 <body class="bg-dark">
     <header>
@@ -24,24 +26,29 @@
                 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                     <div class="container-fluid">
                         <!-- Brand logo -->
-                        <a class="navbar-brand fw-bold fs-2 m-0 p-0" href="index.html">K-</a>
+                        <a class="navbar-brand fw-bold fs-2 m-0 p-0 hvr-grow" href="index.html">K-</a>
                         
                         <!-- Navbar toggler for smaller screens -->
                         <button class="navbar-toggler d-flex align-items-center text-white p-0 border-0 d-lg-none mt-3 mb-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
+                            <!-- Icon for the toggler -->
                             <span class="navbar-toggler-icon fs-6 p-0"></span>
+                            <!-- Label for the toggler -->
                             <span class="ms-2 fw-bold h6 m-0 ps-2">Menu</span>
                         </button>
                         
                         <!-- Navbar links for larger screens -->
                         <div class="collapse navbar-collapse d-none d-lg-block">
                             <ul class="navbar-nav mt-2 mb-2 ms-auto">
-                                <li class="nav-item">
+                                <!-- Link to the Home page -->
+                                <li class="nav-item hvr-grow">
                                     <a class="nav-link text-white pb-0 active" href="index.html">Home</a>
                                 </li>
-                                <li class="nav-item">
+                                <!-- Link to the About page -->
+                                <li class="nav-item hvr-grow">
                                     <a class="nav-link text-white" href="about.html">About</a>
                                 </li>
-                                <li class="nav-item">
+                                <!-- Link to the Contact page -->
+                                <li class="nav-item hvr-grow">
                                     <a class="nav-link text-white" href="contact.html">Contact</a>
                                 </li>
                             </ul>
@@ -58,12 +65,15 @@
                         <div class="offcanvas-body d-flex justify-content-center p-0">
                             <!-- Offcanvas navigation links -->
                             <ul class="nav flex-row text-center">
+                                <!-- Link to the Home page -->
                                 <li class="nav-item">
                                     <a class="nav-link pb-0 text-white active" href="index.html">Home</a>
                                 </li>
+                                <!-- Link to the About page -->
                                 <li class="nav-item">
                                     <a class="nav-link pb-0 text-white" href="about.html">About</a>
                                 </li>
+                                <!-- Link to the Contact page -->
                                 <li class="nav-item">
                                     <a class="nav-link pb-0 text-white" href="contact.html">Contact</a>
                                 </li>
@@ -77,26 +87,30 @@
     <main>
         <!-- Main banner section -->
         <section class="bg-black">
+            <!-- Full-width container for the main banner with sticky positioning -->
             <div class="container-fluid h-25 main-banner sticky-top bg-dark">
+                <!-- Centered content with vertical alignment and white text -->
                 <div class="container-sm d-flex flex-column justify-content-center align-items-center text-left vh-100 text-white position-relative">
                     <div class="container-sm">
-                    <!-- Introduction text -->
-                    <h1 class="h6 text-uppercase mb-2 primary small">Krisada Wasoontarjaroen</h1>
-                    <div>
-                        <span class="sub-heading display-2 fw-bold d-block mt-5">Framing</span>
-                        <span class="main-heading display-1 fw-bold d-block mt-3">creativity</span>
+                        <!-- Introduction text with name and headings -->
+                        <h1 class="h6 text-uppercase mb-2 primary small">Krisada Wasoontarjaroen</h1>
+                        <div>
+                            <!-- Sub-heading and main heading for emphasis -->
+                            <span class="sub-heading display-2 fw-bold d-block mt-5">Framing</span>
+                            <span class="main-heading display-1 fw-bold d-block mt-3">creativity</span>
+                        </div>
+                        <!-- Short description about the author -->
+                        <p class="text-color-secondary mt-5 mb-5 small">Interactive Media Design student with a passion for photography.</p>
                     </div>
-                    <p class="text-color-secondary mt-5 mb-5 small">Interactive Media Design student with a passion for photography.</p>
-                    </div>
-                    <!-- Call-to-action button -->
+                    <!-- Call-to-action button linking to the portfolio -->
                     <div class="mt-5 mb-3">
-                    <a href="https://krisadawasoontarajaroen.free.nf/" class="rounded-pill btn btn-outline-light btn-lg bg-white secondary" target="_blank" rel="noopener noreferrer">View My Projects</a>
+                        <a href="https://krisadawasoontarajaroen.free.nf/" class="rounded-pill btn btn-outline-light btn-lg bg-white secondary fs-5 hvr-grow" target="_blank" rel="noopener noreferrer">View My Projects</a>
                     </div>
-                    <!-- Footer arrow icon -->
-                    <a href="#footer" class="text-white position-absolute" style="bottom: 10vh;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
-                    </svg>
+                    <!-- Scroll-down arrow linking to the footer -->
+                    <a href="#footer" class="text-white position-absolute hvr-buzz-out" style="bottom: 10vh;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
+                        </svg>
                     </a>
                 </div>
             </div>
@@ -104,31 +118,41 @@
         
         <!-- Mission section -->
         <section id="mission" class="bg-light py-5">
+            <!-- Container for mission content with padding -->
             <div class="container ps-5 pe-5">
                 <div class="row mt-4 mb-5">
-                    <!-- Mission statement -->
+                    <!-- Mission statement on the left -->
                     <div class="col-md-6">
                         <div class="text-uppercase secondary fw-bold mb-3">My Mission</div>
+                        <!-- Highlighted mission statement -->
                         <h2 class="fw-bold mb-4 fst-italic">Explore my work and discover how I combine art, design, and storytelling to create engaging visual experiences.</h2>
                     </div>
+                    <!-- Mission description with "Read More" functionality on the right -->
                     <div class="col-md-6">
-                        <!-- Mission description -->
                         <p class="mb-3">I aim to create engaging digital experiences that blend design, technology, and storytelling. By focusing on the user's needs, I strive to transform abstract ideas into functional, captivating visuals and interfaces.</p>
                         <p class="mb-3">I believe that creativity thrives on exploration and continuous learning. Every project is a chance to experiment with new approaches, refine existing skills, and push the boundaries of what interactive media can achieve.</p>
-                        <p>Ultimately, my goal is to inspire curiosity and encourage fresh ways of thinking. Through each design, I hope to foster connections and spark moments of discovery for anyone who interacts with my work.</p>
+                        <div class="card-body">
+                            <!-- Collapsible text for additional mission details -->
+                            <p class="card-text collapse" id="moreText1">
+                                Ultimately, my goal is to inspire curiosity and encourage fresh ways of thinking. Through each design, I hope to foster connections and spark moments of discovery for anyone who interacts with my work.
+                            </p>
+                            <!-- "Read More" link to toggle additional text -->
+                            <a href="#" class="text-muted text-decoration-underline hvr-grow" data-bs-toggle="collapse" data-bs-target="#moreText1" aria-expanded="false" aria-controls="moreText1">Read More</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
     <footer id="footer" class="bg-dark text-center text-white py-3">
+        <!-- Footer section with address and copyright -->
         <div class="container">
             <div class="row mt-4 mb-5">
-                <!-- Footer address -->
+                <!-- Footer address on the left -->
                 <div class="col-md-6">
                     <p class="text-color-secondary">1385 Woodroffe Ave, Ottawa, ON K2G 1V8</p>
                 </div>
-                <!-- Footer copyright -->
+                <!-- Footer copyright on the right -->
                 <div class="col-md-6">
                     <p class="text-color-secondary">&copy; 2025 <span class="primary">Krisada Wasoontarjaroen</span> | All Right Reserved</p>
                 </div>

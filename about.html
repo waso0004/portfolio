@@ -14,6 +14,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
+    <!-- Hover.css -->
+    <link href="css/hover-min.css" rel="stylesheet">
 </head>
 <body class="bg-dark">
     <header>
@@ -28,21 +30,25 @@
                         
                         <!-- Navbar toggler for smaller screens -->
                         <button class="navbar-toggler d-flex align-items-center text-white p-0 border-0 d-lg-none mt-3 mb-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
+                            <!-- Icon for the toggler -->
                             <span class="navbar-toggler-icon fs-6 p-0"></span>
+                            <!-- Label for the toggler -->
                             <span class="ms-2 fw-bold h6 m-0 ps-2">Menu</span>
                         </button>
                         
                         <!-- Navbar links for larger screens -->
                         <div class="collapse navbar-collapse d-none d-lg-block">
                             <ul class="navbar-nav mt-2 mb-2 ms-auto">
-                                <!-- Navigation links -->
-                                <li class="nav-item">
+                                <!-- Link to the Home page -->
+                                <li class="nav-item hvr-grow">
                                     <a class="nav-link text-white" href="index.html">Home</a>
                                 </li>
-                                <li class="nav-item">
+                                <!-- Link to the About page -->
+                                <li class="nav-item hvr-grow">
                                     <a class="nav-link text-white pb-0 active" href="about.html">About</a>
                                 </li>
-                                <li class="nav-item">
+                                <!-- Link to the Contact page -->
+                                <li class="nav-item hvr-grow">
                                     <a class="nav-link text-white" href="contact.html">Contact</a>
                                 </li>
                             </ul>
@@ -59,12 +65,15 @@
                         <div class="offcanvas-body d-flex justify-content-center p-0">
                             <!-- Offcanvas navigation links -->
                             <ul class="nav flex-row text-center">
+                                <!-- Link to the Home page -->
                                 <li class="nav-item">
                                     <a class="nav-link pb-0 text-white" href="index.html">Home</a>
                                 </li>
+                                <!-- Link to the About page -->
                                 <li class="nav-item">
                                     <a class="nav-link pb-0 text-white active" href="about.html">About</a>
                                 </li>
+                                <!-- Link to the Contact page -->
                                 <li class="nav-item">
                                     <a class="nav-link pb-0 text-white" href="contact.html">Contact</a>
                                 </li>
@@ -75,7 +84,7 @@
             </div>
         </div>
     </header>
-    
+
     <main>
         <!-- About Me Section -->
         <section id="about-me" class="bg-white py-5">
@@ -84,18 +93,22 @@
                     <!-- Text Content -->
                     <div class="col-md-8 text-left text-md-start ps-5 pe-5">
                         <div class="p-3">
+                            <!-- Section heading -->
                             <h1 class="h3">About me</h1>
+                            <!-- Brief introduction about Kris -->
                             <p class="fs-6 fw-light fst-italic">
-                            My name is Krisada “Kris” Wasoontarjaroen, and I’m currently studying Interactive Media Design at Algonquin College. 
-                            Photography is my creative outlet, allowing me to capture unique moments and perspectives. 
-                            I also enjoy gaming, watching anime, and longboarding in my free time.
+                                My name is Krisada “Kris” Wasoontarjaroen, and I’m currently studying Interactive Media Design at Algonquin College. 
+                                Photography is my creative outlet, allowing me to capture unique moments and perspectives. 
+                                I also enjoy gaming, watching anime, and longboarding in my free time.
                             </p>
                         </div>
                     </div>
                     <!-- Image and Vertical Text -->
                     <div class="col-md-4 text-center mb-4 mb-md-0">
                         <div class="d-flex flex-column align-items-center">
+                            <!-- Profile image -->
                             <img src="images/me.jpg" alt="Krisada W." class="rounded-circle img-fluid mb-3 w-50 h-auto">
+                            <!-- Name below the image -->
                             <p class="fw-bold mb-0">Krisada W.</p>
                         </div>
                     </div>
@@ -105,44 +118,57 @@
         <!-- Photography Section -->
         <section class="bg-dark py-5">
             <div class="container text-center p-5">
-                <h2 class="text-white mb-5">Photography is my creative outlet</h2>
+                <!-- Section heading -->
+                <h2 class="text-white ms-2 mb-5 text-start">Photography is my creative outlet</h2>
                 <div class="row">
-                    <!-- Card 1 -->
+                    <!-- Card 1: Background and Experience -->
                     <div class="col-md-4 pt-3 pb-3">
-                        <div class="card bg-white border-0">
+                        <div class="card bg-white border-0 hvr-grow">
+                            <!-- Image for the card -->
                             <img src="images/photo1.jpg" class="card-img-top" alt="Background and Experience">
                             <div class="card-body">
+                                <!-- Card title -->
                                 <div class="h5 card-title pt-3 pb-3">Background and Experience</div>
+                                <!-- Collapsible text with details -->
                                 <p class="card-text collapse" id="moreText1">
                                     Krisada “Kris” Wasoontarajaroen is an Interactive Media Design student at Algonquin College. He combines photography with emerging digital tools, focusing on user-friendly experiences. Kris refines design concepts, collaborates in team settings, and seeks fresh ideas that merge creativity and technology.
                                 </p>
-                                <a href="#" class="text-muted text-decoration-none" data-bs-toggle="collapse" data-bs-target="#moreText1" aria-expanded="false" aria-controls="moreText1">Read More</a>
+                                <!-- "Read More" link to toggle the collapsible text -->
+                                <a href="#" class="text-muted text-decoration-underline hvr-grow" data-bs-toggle="collapse" data-bs-target="#moreText1" aria-expanded="false" aria-controls="moreText1">Read More</a>
                             </div>
                         </div>
                     </div>
-                    <!-- Card 2 -->
+                    <!-- Card 2: Design Philosophy -->
                     <div class="col-md-4 pt-3 pb-3">
-                        <div class="card bg-white border-0">
+                        <div class="card bg-white border-0 hvr-grow">
+                            <!-- Image for the card -->
                             <img src="images/photo2.jpg" class="card-img-top" alt="Design Philosophy">
                             <div class="card-body">
+                                <!-- Card title -->
                                 <div class="h5 card-title pt-3 pb-3">Design Philosophy</div>
+                                <!-- Collapsible text with details -->
                                 <p class="card-text collapse" id="moreText2">
                                     My design philosophy blends usability and creative flair. Each project aims to solve user needs while sparking curiosity and inspiration. I constantly explore new ideas to push boundaries and deliver memorable, engaging experiences.
                                 </p>
-                                <a href="#" class="text-muted text-decoration-none" data-bs-toggle="collapse" data-bs-target="#moreText2" aria-expanded="false" aria-controls="moreText2">Read More</a>
+                                <!-- "Read More" link to toggle the collapsible text -->
+                                <a href="#" class="text-muted text-decoration-underline hvr-grow" data-bs-toggle="collapse" data-bs-target="#moreText2" aria-expanded="false" aria-controls="moreText2">Read More</a>
                             </div>
                         </div>
                     </div>
-                    <!-- Card 3 -->
+                    <!-- Card 3: Core Value -->
                     <div class="col-md-4 pt-3 pb-3">
-                        <div class="card bg-white border-0">
+                        <div class="card bg-white border-0 hvr-grow">
+                            <!-- Image for the card -->
                             <img src="images/photo3.jpg" class="card-img-top" alt="Core Value">
                             <div class="card-body">
+                                <!-- Card title -->
                                 <div class="h5 card-title pt-3 pb-3">Core Value</div>
+                                <!-- Collapsible text with details -->
                                 <p class="card-text collapse" id="moreText3">
                                     I believe creativity flourishes when guided by empathy and purpose. By focusing on genuine user needs and exploring fresh ideas, I aim to create designs that not only look appealing but also spark meaningful connections among people, technology, and the stories we share.
                                 </p>
-                                <a href="#" class="text-muted text-decoration-none" data-bs-toggle="collapse" data-bs-target="#moreText3" aria-expanded="false" aria-controls="moreText3">Read More</a>
+                                <!-- "Read More" link to toggle the collapsible text -->
+                                <a href="#" class="text-muted text-decoration-underline hvr-grow" data-bs-toggle="collapse" data-bs-target="#moreText3" aria-expanded="false" aria-controls="moreText3">Read More</a>
                             </div>
                         </div>
                     </div>
