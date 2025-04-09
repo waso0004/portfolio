@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
 <head>
     <!-- Metadata and title for the webpage -->
     <meta charset="UTF-8">
@@ -18,18 +18,21 @@
     <link href="css/hover-min.css" rel="stylesheet">
 </head>
 <body class="bg-dark">
-    <header>
+    <!-- Skip link for keyboard navigation -->
+    <a href="#main-content" class="visually-hidden-focusable text-white">Skip to main content</a>
+
+    <header role="banner">
         <!-- Full-width dark background for the header -->
         <div class="container-fluid bg-dark">
             <div class="container-sm bg-dark">
                 <!-- Navbar with Bootstrap classes -->
-                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark" role="navigation" aria-label="Main navigation">
                     <div class="container-fluid">
                         <!-- Brand logo -->
-                        <a class="navbar-brand fw-bold fs-2 m-0 p-0 hvr-grow" href="index.html">K-</a>
+                        <a class="navbar-brand fw-bold fs-2 m-0 p-0 hvr-grow" href="index.html" itemprop="url">K-</a>
                         
                         <!-- Navbar toggler for smaller screens -->
-                        <button class="navbar-toggler d-flex align-items-center text-white p-0 border-0 d-lg-none mt-3 mb-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
+                        <button class="navbar-toggler d-flex align-items-center text-white p-0 border-0 d-lg-none mt-3 mb-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop" aria-expanded="false" aria-label="Toggle navigation">
                             <!-- Icon for the toggler -->
                             <span class="navbar-toggler-icon fs-6 p-0"></span>
                             <!-- Label for the toggler -->
@@ -41,7 +44,7 @@
                             <ul class="navbar-nav mt-2 mb-2 ms-auto">
                                 <!-- Link to the Home page -->
                                 <li class="nav-item hvr-grow">
-                                    <a class="nav-link text-white pb-0 active" href="index.html">Home</a>
+                                    <a class="nav-link text-white pb-0 active" href="index.html" aria-current="page">Home</a>
                                 </li>
                                 <!-- Link to the About page -->
                                 <li class="nav-item hvr-grow">
@@ -56,7 +59,7 @@
                     </div>
                     
                     <!-- Offcanvas menu for smaller screens -->
-                    <div class="offcanvas offcanvas-top bg-dark text-white d-lg-none" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+                    <div class="offcanvas offcanvas-top bg-dark text-white d-lg-none" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel" role="dialog" aria-modal="true">
                         <div class="offcanvas-header">
                             <!-- Offcanvas title and close button -->
                             <div class="offcanvas-title mx-auto" id="offcanvasTopLabel"></div>
@@ -67,7 +70,7 @@
                             <ul class="nav flex-row text-center">
                                 <!-- Link to the Home page -->
                                 <li class="nav-item">
-                                    <a class="nav-link pb-0 text-white active" href="index.html">Home</a>
+                                    <a class="nav-link pb-0 text-white active" href="index.html" aria-current="page">Home</a>
                                 </li>
                                 <!-- Link to the About page -->
                                 <li class="nav-item">
@@ -83,17 +86,15 @@
                 </nav>
             </div>
         </div>
-    </header>
-    <main>
         <!-- Main banner section -->
-        <section class="bg-black">
+        <section class="bg-black" role="region" aria-labelledby="main-banner-heading">
             <!-- Full-width container for the main banner with sticky positioning -->
             <div class="container-fluid h-25 main-banner sticky-top bg-dark">
                 <!-- Centered content with vertical alignment and white text -->
                 <div class="container-sm d-flex flex-column justify-content-center align-items-center text-left vh-100 text-white position-relative">
                     <div class="container-sm">
                         <!-- Introduction text with name and headings -->
-                        <h1 class="h6 text-uppercase mb-2 primary small">Krisada Wasoontarjaroen</h1>
+                        <h1 id="main-banner-heading" class="h6 text-uppercase mb-2 primary small">Krisada Wasoontarjaroen</h1>
                         <div>
                             <!-- Sub-heading and main heading for emphasis -->
                             <span class="sub-heading display-2 fw-bold d-block mt-5">Framing</span>
@@ -104,10 +105,10 @@
                     </div>
                     <!-- Call-to-action button linking to the portfolio -->
                     <div class="mt-5 mb-3">
-                        <a href="https://krisadawasoontarajaroen.free.nf/" class="rounded-pill btn btn-outline-light btn-lg bg-white secondary fs-5 hvr-grow" target="_blank" rel="noopener noreferrer">View My Projects</a>
+                        <a href="https://krisadawasoontarajaroen.free.nf/" class="rounded-pill btn btn-outline-light btn-lg bg-white secondary fs-5 hvr-grow" target="_blank" rel="noopener noreferrer" role="button">View My Projects</a>
                     </div>
                     <!-- Scroll-down arrow linking to the footer -->
-                    <a href="#footer" class="text-white position-absolute hvr-buzz-out" style="bottom: 10vh;">
+                    <a href="#footer" class="text-white position-absolute hvr-buzz-out" style="bottom: 10vh;" aria-label="Scroll to footer">
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
                         </svg>
@@ -115,15 +116,16 @@
                 </div>
             </div>
         </section>
-        
+    </header>
+    <main id="main-content" role="main">
         <!-- Mission section -->
-        <section id="mission" class="bg-light py-5">
+        <section id="mission" class="bg-light py-5" role="region" aria-labelledby="mission-heading">
             <!-- Container for mission content with padding -->
             <div class="container ps-5 pe-5">
                 <div class="row mt-4 mb-5">
                     <!-- Mission statement on the left -->
                     <div class="col-md-6">
-                        <div class="text-uppercase secondary fw-bold mb-3">My Mission</div>
+                        <div id="mission-heading" class="text-uppercase secondary fw-bold mb-3">My Mission</div>
                         <!-- Highlighted mission statement -->
                         <h2 class="fw-bold mb-4 fst-italic">Explore my work and discover how I combine art, design, and storytelling to create engaging visual experiences.</h2>
                     </div>
@@ -144,17 +146,17 @@
             </div>
         </section>
     </main>
-    <footer id="footer" class="bg-dark text-center text-white py-3">
+    <footer id="footer" class="bg-dark text-center text-white py-3" role="contentinfo">
         <!-- Footer section with address and copyright -->
         <div class="container">
             <div class="row mt-4 mb-5">
                 <!-- Footer address on the left -->
                 <div class="col-md-6">
-                    <p class="text-color-secondary">1385 Woodroffe Ave, Ottawa, ON K2G 1V8</p>
+                    <p class="text-color-secondary" itemprop="address">1385 Woodroffe Ave, Ottawa, ON K2G 1V8</p>
                 </div>
                 <!-- Footer copyright on the right -->
                 <div class="col-md-6">
-                    <p class="text-color-secondary">&copy; 2025 <span class="primary">Krisada Wasoontarjaroen</span> | All Right Reserved</p>
+                    <p class="text-color-secondary">&copy; 2025 <span class="primary" itemprop="copyrightHolder">Krisada Wasoontarjaroen</span> | All Right Reserved</p>
                 </div>
             </div>
         </div>
