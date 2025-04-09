@@ -20,7 +20,7 @@ body {
 }
 
 .offcanvas  {
-    --bs-offcanvas-height: 15vh;
+    --bs-offcanvas-height: 100px;
 }
 
 .active {
@@ -76,12 +76,5 @@ body {
 @media (min-width: 992px) {
     .active::after {
         width: 65%;
-    }
-}
-
-@media (max-width: 300px) {
-    body {
-        min-width: 300px;
-        overflow-x: hidden;
     }
 }
