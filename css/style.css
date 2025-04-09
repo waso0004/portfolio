@@ -1,80 +1,104 @@
+/* Define CSS variables for primary and secondary colors, text colors, and background colors */
 :root {
-    --primary: #7EB5BE;
-    --secondary: #005F6B;
-    --text-color: #F3F7F6;
-    --text-color-secondary: #787D81;
-    --backgorund-color: rgba(0, 0, 0, 0);
-    --background-color-secondary: #111111;
+	--primary: #7eb5be; /* Light teal color for primary elements */
+	--secondary: #005f6b; /* Dark teal color for secondary elements */
+	--text-color: #f3f7f6; /* Light text color */
+	--text-color-secondary: #787d81; /* Gray text color for secondary text */
+	--backgorund-color: rgba(0, 0, 0, 0); /* Transparent background color */
+	--background-color-secondary: #111111; /* Dark background color */
 }
 
+/* Apply the Roboto font family to the entire body */
 body {
-    font-family: "Roboto", sans-serif;
+	font-family: "Roboto", sans-serif;
 }
 
+/* Set a dark background color for elements with the .bg-dark class */
 .bg-dark {
-    background-color: var(--background-color-secondary) !important;
+	background-color: var(--background-color-secondary) !important;
 }
 
+/* Set a custom background image for the navbar toggler icon */
 .navbar-toggler-icon {
-    background-image: url(../images/hamburger-menu.svg);
+	background-image: url(../images/hamburger-menu.svg);
 }
 
-.offcanvas  {
-    --bs-offcanvas-height: 100px;
+/* Customize the height of the offcanvas menu */
+.offcanvas {
+	--bs-offcanvas-height: 100px; /* Set the height of the offcanvas menu */
 }
 
+/* Style for the active navigation link */
 .active {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+	position: relative; /* Position relative for pseudo-element placement */
+	display: flex; /* Flexbox for alignment */
+	justify-content: center; /* Center horizontally */
+	align-items: center; /* Center vertically */
+	text-align: center; /* Center text */
 }
+
+/* Add an underline effect for active navigation links */
 .active::after {
-    content: '';
-    position: absolute;
-    bottom: -1px; 
-    width: 50%;
-    height: 2px; 
-    background-color: var(--text-color); 
+	content: ""; /* Empty content for the underline */
+	position: absolute; /* Position relative to the parent */
+	bottom: -1px; /* Position the underline just below the text */
+	width: 50%; /* Set the underline width */
+	height: 2px; /* Set the underline height */
+	background-color: var(
+		--text-color
+	); /* Use the light text color for the underline */
 }
 
+/* Set a dark teal background color for elements with the .bg-primary class */
 .bg-primary {
-    background-color: var(--secondary) !important;
+	background-color: var(--secondary) !important;
 }
 
+/* Set the primary color for elements with the .primary class */
 .primary {
-    color: var(--primary) !important;
+	color: var(--primary) !important;
 }
 
+/* Set the secondary color for elements with the .secondary class */
 .secondary {
-    color: var(--secondary) !important;
+	color: var(--secondary) !important;
 }
 
+/* Set the secondary text color for elements with the .text-color-secondary class */
 .text-color-secondary {
-    color: var(--text-color-secondary) !important;
+	color: var(--text-color-secondary) !important;
 }
 
+/* Style for subheadings */
 .sub-heading {
-    font-family: "Roboto Mono";
-    color: var(--backgorund-color);
-    -webkit-text-stroke: 1px var(--text-color);
+	font-family: "Roboto Mono"; /* Use the Roboto Mono font */
+	color: var(--backgorund-color); /* Use the transparent background color */
+	-webkit-text-stroke: 1px var(--text-color); /* Add a stroke effect to the text */
 }
 
+/* Style for main headings */
 .main-heading {
-    font-family: "Roboto Mono";
+	font-family: "Roboto Mono"; /* Use the Roboto Mono font */
 }
 
+/* Style for the main banner background */
 .main-banner {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url(../images/main-banner.jpg);
-    background-size: cover;
-    background-position: center 30%;
-    background-repeat: no-repeat;
+	background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)),
+		url(../images/main-banner.jpg); /* Add a dark overlay on the banner image */
+	background-size: cover; /* Ensure the image covers the entire container */
+	background-position: center 30%; /* Position the image */
+	background-repeat: no-repeat; /* Prevent the image from repeating */
 }
 
+/* Position the arrow element */
+.arrow {
+	bottom: 14vh; /* Position the arrow 14% from the bottom of the viewport */
+}
 
+/* Media query for screens wider than 992px */
 @media (min-width: 992px) {
-    .active::after {
-        width: 65%;
-    }
+	/* Increase the underline width for active navigation links on larger screens */
+	.active::after {
+		width: 65%;
+	}
 }
