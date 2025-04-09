@@ -72,9 +72,16 @@ body {
     background-repeat: no-repeat;
 }
 
+
 @media (min-width: 992px) {
     .active::after {
         width: 65%;
     }
 }
 
+@media (max-width: 300px) {
+    body {
+        min-width: 300px;
+        overflow-x: hidden;
+    }
+}
