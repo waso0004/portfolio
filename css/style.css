@@ -21,6 +21,29 @@ body {
 	will-change: transform, opacity;
 }
 
+.js-enabled .scroll-reveal {
+	opacity: 0;
+	transform: translateY(18px);
+}
+
+.js-enabled .lazy-render {
+	opacity: 0;
+	transition: opacity var(--lazy-fade-duration, 1.3s) ease;
+}
+
+.js-enabled .lazy-render.lazy-fade-out {
+	opacity: 0;
+}
+
+.js-enabled .lazy-render.lazy-render-empty {
+	visibility: hidden;
+	opacity: 0;
+}
+
+.js-enabled .lazy-render.lazy-visible {
+	opacity: 1;
+}
+
 .scroll-reveal.is-visible {
 	opacity: 1;
 	transform: translateY(0);
