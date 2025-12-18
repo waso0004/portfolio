@@ -110,6 +110,41 @@ const initScrollReveal = () => {
         revealItems.forEach((item) => item.classList.add("is-visible"));
         return;
     }
+    
+    // Track which groups have completed their animations
+    const completedGroups = new Set();
+    // Track items waiting for their group turn
+    const pendingItems = new Map(); // element -> group number
+    
+    // Animation duration in ms (matches CSS transition)
+    const REVEAL_DURATION = 600;
+    
+    const canReveal = (item) => {
+        const group = item.dataset.revealGroup;
+        if (!group) return true; // No group = can always reveal
+        
+        const groupNum = parseInt(group, 10);
+        // Group 1 can always reveal, higher groups need previous groups done
+        for (let i = 1; i < groupNum; i++) {
+            if (!completedGroups.has(i)) return false;
+        }
+        return true;
+    };
+    
+    const markGroupComplete = (groupNum) => {
+        completedGroups.add(groupNum);
+        // Check if any pending items can now be revealed
+        pendingItems.forEach((pendingGroup, el) => {
+            if (canReveal(el)) {
+                el.classList.add("is-visible");
+                pendingItems.delete(el);
+                // Mark this item's group as completing after animation
+                if (pendingGroup) {
+                    setTimeout(() => markGroupComplete(pendingGroup), REVEAL_DURATION);
+                }
+            }
+        });
+    };
 
     const observer = new IntersectionObserver(
         (entries) => {
@@ -119,7 +154,25 @@ const initScrollReveal = () => {
                 const isPastTop = viewportBottom >= elemTop;
                 const shouldShow = isPastTop;
 
-                entry.target.classList.toggle("is-visible", shouldShow);
+                if (shouldShow) {
+                    const group = entry.target.dataset.revealGroup;
+                    const groupNum = group ? parseInt(group, 10) : null;
+                    
+                    if (canReveal(entry.target)) {
+                        entry.target.classList.add("is-visible");
+                        // Mark group as complete after animation finishes
+                        if (groupNum) {
+                            setTimeout(() => markGroupComplete(groupNum), REVEAL_DURATION);
+                        }
+                    } else {
+                        // Store for later when previous group completes
+                        pendingItems.set(entry.target, groupNum);
+                    }
+                } else {
+                    entry.target.classList.remove("is-visible");
+                    // If hiding, remove from pending
+                    pendingItems.delete(entry.target);
+                }
             });
         },
         {
@@ -134,6 +187,68 @@ const initScrollReveal = () => {
 const initLazyRender = () => {
     const lazyList = Array.from(document.querySelectorAll(".lazy-render"));
     if (!lazyList.length) return;
+    
+    // Track completed reveal groups and their animation status
+    const completedGroups = new Set();
+    const animatingGroups = new Set();
+    
+    // Track teardown status for groups (higher groups must teardown before lower)
+    const tornDownGroups = new Set();
+    const tearingDownGroups = new Set();
+    
+    // Find the highest group number in use
+    let maxGroupNum = 0;
+    lazyList.forEach((el) => {
+        const group = el.dataset.revealGroup;
+        if (group) {
+            maxGroupNum = Math.max(maxGroupNum, parseInt(group, 10));
+        }
+    });
+    
+    // Scroll velocity tracking
+    let lastScrollY = window.scrollY;
+    let lastScrollTime = performance.now();
+    let scrollVelocity = 0; // pixels per ms
+    
+    // Animation duration bounds (in ms)
+    const MIN_ANIMATION_DURATION = 50;   // fastest animation when scrolling fast
+    const MAX_ANIMATION_DURATION = 250;  // slowest animation when scrolling slow
+    
+    // Scroll speed thresholds (pixels per ms)
+    const SLOW_SCROLL_SPEED = 0.5;   // below this = max duration
+    const FAST_SCROLL_SPEED = 3.0;   // above this = min duration
+    
+    const updateScrollVelocity = () => {
+        const now = performance.now();
+        const currentScrollY = window.scrollY;
+        const timeDelta = now - lastScrollTime;
+        
+        if (timeDelta > 0) {
+            const distance = Math.abs(currentScrollY - lastScrollY);
+            scrollVelocity = distance / timeDelta;
+        }
+        
+        lastScrollY = currentScrollY;
+        lastScrollTime = now;
+    };
+    
+    const getAnimationDuration = () => {
+        // Map scroll velocity to animation duration (inverse relationship)
+        // Faster scroll = shorter duration, slower scroll = longer duration
+        if (scrollVelocity <= SLOW_SCROLL_SPEED) {
+            return MAX_ANIMATION_DURATION;
+        }
+        if (scrollVelocity >= FAST_SCROLL_SPEED) {
+            return MIN_ANIMATION_DURATION;
+        }
+        
+        // Linear interpolation between min and max
+        const speedRange = FAST_SCROLL_SPEED - SLOW_SCROLL_SPEED;
+        const speedProgress = (scrollVelocity - SLOW_SCROLL_SPEED) / speedRange;
+        const durationRange = MAX_ANIMATION_DURATION - MIN_ANIMATION_DURATION;
+        
+        return MAX_ANIMATION_DURATION - (speedProgress * durationRange);
+    };
 
     const renderFromBottom = (el) => {
         if (el.dataset.rendered === "true") return;
@@ -141,7 +256,9 @@ const initLazyRender = () => {
         // cancel any fade-out in progress
         el.classList.remove("lazy-fade-out");
         el.dataset.fading = "false";
-        el.style.transitionDuration = `${lazyFadeDurationMs}ms`;
+        
+        const animDuration = getAnimationDuration();
+        el.style.transitionDuration = `${animDuration}ms`;
 
         const html = el.dataset.lazyContent || "";
         if (html) {
@@ -165,18 +282,76 @@ const initLazyRender = () => {
         // force reflow so the transition runs when we add the class back
         void el.offsetWidth;
         el.classList.add("lazy-visible");
+        
+        // Handle reveal group completion
+        const group = el.dataset.revealGroup;
+        if (group) {
+            const groupNum = parseInt(group, 10);
+            // Clear torn down status since we're re-rendering
+            tornDownGroups.delete(groupNum);
+            
+            if (!animatingGroups.has(groupNum)) {
+                animatingGroups.add(groupNum);
+                // Mark group complete after animation finishes
+                setTimeout(() => {
+                    animatingGroups.delete(groupNum);
+                    completedGroups.add(groupNum);
+                    // Trigger re-evaluation for pending items
+                    evaluateLazy();
+                }, animDuration);
+            }
+        }
+    };
+    
+    const canRevealGroup = (el) => {
+        const group = el.dataset.revealGroup;
+        if (!group) return true; // No group = can always reveal
+        
+        const groupNum = parseInt(group, 10);
+        // Group 1 can always reveal, higher groups need previous groups completed (not just started)
+        for (let i = 1; i < groupNum; i++) {
+            if (!completedGroups.has(i)) return false;
+        }
+        return true;
+    };
+    
+    const canTeardownGroup = (el) => {
+        const group = el.dataset.revealGroup;
+        if (!group) return true; // No group = can always teardown
+        
+        const groupNum = parseInt(group, 10);
+        // Lower groups can only teardown after higher groups have torn down
+        // e.g., group 1 (Skills) can't teardown until group 2 (Tools) is done
+        for (let i = groupNum + 1; i <= maxGroupNum; i++) {
+            if (!tornDownGroups.has(i)) return false;
+        }
+        return true;
     };
 
     const teardownIfAbove = (el) => {
         if (el.dataset.rendered !== "true") return;
         if (el.dataset.fading === "true") return;
+        
+        // Check if this group can teardown (higher groups must go first)
+        if (!canTeardownGroup(el)) return;
 
+        const animDuration = getAnimationDuration();
+        
         el.dataset.fading = "true";
         el.classList.remove("lazy-visible");
-        el.style.transitionDuration = `${lazyFadeDurationMs}ms`;
+        el.style.transitionDuration = `${animDuration}ms`;
         el.classList.add("lazy-fade-out");
+        
+        // Track teardown for group ordering
+        const group = el.dataset.revealGroup;
+        if (group) {
+            const groupNum = parseInt(group, 10);
+            if (!tearingDownGroups.has(groupNum)) {
+                tearingDownGroups.add(groupNum);
+            }
+        }
 
-        const teardownDelay = lazyFadeDurationMs + 100; // slightly above CSS transition (ms)
+        const teardownDelay = animDuration + 50; // slightly above transition duration
         setTimeout(() => {
             // if it was re-rendered during the fade, abort teardown
             if (!el.classList.contains("lazy-fade-out")) return;
@@ -189,6 +364,16 @@ const initLazyRender = () => {
             el.dataset.fading = "false";
             el.classList.add("lazy-render-empty");
             el.classList.remove("lazy-fade-out");
+            
+            // Mark group as torn down and clear from completed (for re-reveal later)
+            if (group) {
+                const groupNum = parseInt(group, 10);
+                tornDownGroups.add(groupNum);
+                tearingDownGroups.delete(groupNum);
+                completedGroups.delete(groupNum);
+                // Trigger re-evaluation for items waiting to teardown
+                evaluateLazy();
+            }
         }, teardownDelay);
     };
 
@@ -229,8 +414,11 @@ const initLazyRender = () => {
             // Require the previous lazy item (if any) to have rendered at least once
             const prevEverRendered =
                 idx === 0 ? true : lazyList[idx - 1].dataset.everRendered === "true";
+            
+            // Check if this item's reveal group can be shown (previous groups must be done animating)
+            const groupAllowed = canRevealGroup(el);
 
-            const shouldRender = prevEverRendered && !offscreenBelow && !offscreenAbove;
+            const shouldRender = prevEverRendered && groupAllowed && !offscreenBelow && !offscreenAbove;
             if (shouldRender) {
                 const firstTime = el.dataset.everRendered !== "true";
                 renderFromBottom(el);
@@ -244,7 +432,10 @@ const initLazyRender = () => {
     };
 
     evaluateLazy();
-    window.addEventListener("scroll", evaluateLazy, { passive: true });
+    window.addEventListener("scroll", () => {
+        updateScrollVelocity();
+        evaluateLazy();
+    }, { passive: true });
     window.addEventListener("resize", evaluateLazy);
     // Fallback timer and visibility change to catch fast flings or missed events
     setInterval(evaluateLazy, 250);
@@ -265,68 +456,6 @@ const initPageTransitions = () => {
 
     // Clear the flag now that we've read it at the top of the file
     sessionStorage.removeItem(pageTransitionFlagKey);
-    
-    // LocalStorage cache for pages - with version to invalidate old caches
-    const CACHE_VERSION = "v4";
-    const PAGE_CACHE_PREFIX = "page-cache-" + CACHE_VERSION + "-";
-    const PAGE_CACHE_TIME_PREFIX = "page-cache-time-" + CACHE_VERSION + "-";
-    const CACHE_DURATION = 1000 * 60 * 60; // 1 hour
-    
-    // Clear old cache versions on load
-    try {
-        Object.keys(localStorage).forEach((key) => {
-            if ((key.startsWith("page-cache-") || key.startsWith("page-cache-time-")) && !key.includes(CACHE_VERSION)) {
-                localStorage.removeItem(key);
-            }
-        });
-    } catch (e) {}
-    
-    const getCachedPage = (url) => {
-        try {
-            const key = PAGE_CACHE_PREFIX + url;
-            const timeKey = PAGE_CACHE_TIME_PREFIX + url;
-            const cached = localStorage.getItem(key);
-            const cachedTime = localStorage.getItem(timeKey);
-            
-            if (cached && cachedTime) {
-                const age = Date.now() - parseInt(cachedTime, 10);
-                if (age < CACHE_DURATION) {
-                    return cached;
-                }
-                // Cache expired, remove it
-                localStorage.removeItem(key);
-                localStorage.removeItem(timeKey);
-            }
-        } catch (e) {
-            // localStorage might be full or disabled
-        }
-        return null;
-    };
-    
-    const setCachedPage = (url, html) => {
-        try {
-            const key = PAGE_CACHE_PREFIX + url;
-            const timeKey = PAGE_CACHE_TIME_PREFIX + url;
-            localStorage.setItem(key, html);
-            localStorage.setItem(timeKey, Date.now().toString());
-        } catch (e) {
-            // localStorage might be full, clear old caches
-            try {
-                Object.keys(localStorage).forEach((k) => {
-                    if (k.startsWith(PAGE_CACHE_PREFIX) || k.startsWith(PAGE_CACHE_TIME_PREFIX)) {
-                        localStorage.removeItem(k);
-                    }
-                });
-                localStorage.setItem(PAGE_CACHE_PREFIX + url, html);
-                localStorage.setItem(PAGE_CACHE_TIME_PREFIX + url, Date.now().toString());
-            } catch (e2) {
-                // Give up on caching
-            }
-        }
-    };
-    
-    // Cache current page on load
-    setCachedPage(window.location.href, document.documentElement.outerHTML);
 
     loadGsap()
         .then((gsapLib) => {
@@ -357,8 +486,13 @@ const initPageTransitions = () => {
             tl.to(path, { attr: { d: shapes.mid }, ease: "power2.in", duration: 0.45 })
                 .to(path, { attr: { d: shapes.full }, ease: "power2.out", duration: 0.45 });
 
-            let pendingNavigation = null;
-            let isNavigating = false;
+            let pendingHref = null;
+
+            tl.eventCallback("onComplete", () => {
+                if (pendingHref) {
+                    window.location.href = pendingHref;
+                }
+            });
 
             const svg = overlay.querySelector(".page-transition__svg");
             
@@ -379,265 +513,51 @@ const initPageTransitions = () => {
                 svg.style.marginLeft = dir.marginLeft;
                 svg.style.marginTop = dir.marginTop;
             };
-            
-            const swapPageContent = (html, url) => {
-                const parser = new DOMParser();
-                const newDoc = parser.parseFromString(html, "text/html");
-                
-                // Update title
-                document.title = newDoc.title;
-                
-                // Reset body styles (Bootstrap offcanvas may have set overflow:hidden)
-                document.body.style.overflow = '';
-                document.body.style.paddingRight = '';
-                document.body.classList.remove('offcanvas-open');
-                
-                // Remove any leftover Bootstrap backdrops
-                document.querySelectorAll('.offcanvas-backdrop').forEach(el => el.remove());
-                
-                // Swap main content
-                const newMain = newDoc.querySelector("main");
-                const currentMain = document.querySelector("main");
-                if (newMain && currentMain) {
-                    currentMain.innerHTML = newMain.innerHTML;
-                }
-                
-                // Swap header (for active nav state)
-                const newHeader = newDoc.querySelector("header");
-                const currentHeader = document.querySelector("header");
-                if (newHeader && currentHeader) {
-                    currentHeader.innerHTML = newHeader.innerHTML;
-                }
-                
-                // Swap footer if different
-                const newFooter = newDoc.querySelector("footer");
-                const currentFooter = document.querySelector("footer");
-                if (newFooter && currentFooter) {
-                    currentFooter.innerHTML = newFooter.innerHTML;
-                }
-                
-                // Update URL
-                window.history.pushState({ url: url }, "", url);
-                
-                // Scroll to top
-                window.scrollTo(0, 0);
-                
-                // Re-initialize components
-                initProjectPreviews();
-                initLazyRender();
-                initScrollReveal();
-                
-                // Re-initialize Bootstrap components (collapse, offcanvas, etc.)
-                if (window.bootstrap) {
-                    // Initialize all collapse elements
-                    document.querySelectorAll('[data-bs-toggle="collapse"]').forEach((el) => {
-                        new bootstrap.Collapse(el, { toggle: false });
-                    });
-                    // Initialize all offcanvas elements
-                    document.querySelectorAll('.offcanvas').forEach((el) => {
-                        new bootstrap.Offcanvas(el);
-                    });
-                }
-                
-                // Re-attach link handlers to nav menu links only (not back-to-top, arrows, etc)
-                document.querySelectorAll("nav .nav-link[href], nav .navbar-brand[href]").forEach((link) => {
-                    link.removeEventListener("click", handleLinkClick);
-                    link.addEventListener("click", handleLinkClick);
-                });
-                
-                // Cache the new page
-                setCachedPage(url, html);
-            };
-            
-            const fetchPage = async (url) => {
-                // Check cache first
-                const cached = getCachedPage(url);
-                if (cached) {
-                    return cached;
-                }
-                
-                // Fetch from network
-                const response = await fetch(url);
-                if (!response.ok) throw new Error("Failed to fetch page");
-                const html = await response.text();
-                return html;
-            };
-            
-            const revealPage = () => {
-                const revealTl = gsapLib.timeline();
-                revealTl.to(path, { attr: { d: shapes.mid }, ease: "power2.in", duration: 0.45 })
-                    .to(path, { attr: { d: shapes.hidden }, ease: "power2.out", duration: 0.45 })
-                    .eventCallback("onComplete", () => {
-                        overlay.classList.remove("is-active");
-                        overlay.style.pointerEvents = "none";
-                        isNavigating = false;
-                    });
-            };
 
-            const coverAndNavigate = async (href) => {
-                if (!href || isNavigating) return;
+            const coverAndNavigate = (href) => {
+                if (!href || tl.isActive()) return;
 
-                isNavigating = true;
-                pendingNavigation = href;
+                pendingHref = href;
                 
                 // Pick a random direction
                 const dir = directions[Math.floor(Math.random() * directions.length)];
                 applyDirection(dir);
                 
-                // Store direction for reveal
+                // Store direction for reveal on next page
                 sessionStorage.setItem("page-transition-dir", JSON.stringify(dir));
+                sessionStorage.setItem(pageTransitionFlagKey, "true");
                 
                 overlay.classList.add("is-active");
                 overlay.style.pointerEvents = "auto";
-                
-                // Start fetching page in parallel with animation
-                const fetchPromise = fetchPage(href);
-                
-                // Play cover animation
                 tl.play(0);
-                
-                // Wait for both animation and fetch to complete
-                const animationComplete = new Promise((resolve) => {
-                    tl.eventCallback("onComplete", resolve);
+            };
+
+            // Only attach click handlers to nav-link and navbar-brand elements
+            document.querySelectorAll("nav .nav-link, nav .navbar-brand").forEach((link) => {
+                link.addEventListener("click", (event) => {
+                    const href = link.getAttribute("href") || "";
+                    
+                    // Skip hash links entirely
+                    if (!href || href === "#" || href.startsWith("#")) return;
+                    
+                    // Skip if modifier keys
+                    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                    
+                    // Skip external links
+                    const target = link.getAttribute("target");
+                    if (target && target !== "_self") return;
+                    
+                    try {
+                        const url = new URL(href, window.location.href);
+                        if (url.origin !== window.location.origin) return;
+                        
+                        // Prevent default and animate
+                        event.preventDefault();
+                        coverAndNavigate(url.href);
+                    } catch (e) {
+                        // Invalid URL, let browser handle it
+                    }
                 });
-                
-                try {
-                    const [, html] = await Promise.all([animationComplete, fetchPromise]);
-                    
-                    // Swap content
-                    swapPageContent(html, href);
-                    
-                    // Reveal the new page
-                    revealPage();
-                } catch (error) {
-                    // Fallback to traditional navigation on error
-                    window.location.href = href;
-                }
-            };
-
-            const shouldAnimateLink = (link) => {
-                // Exclude back-to-top button explicitly
-                if (link.classList.contains('back-to-top')) return false;
-                
-                // Only animate links inside nav elements
-                if (!link.closest('nav')) return false;
-                
-                const href = link.getAttribute("href") || "";
-                if (!href || href === "#" || href.startsWith("#")) return false;
-                if (href.startsWith("mailto:") || href.startsWith("tel:")) return false;
-
-                const target = link.getAttribute("target");
-                if (target && target !== "_self") return false;
-
-                const url = new URL(href, window.location.href);
-                if (url.origin !== window.location.origin) return false;
-
-                // Do not run the transition if we're only moving within the same page
-                if (url.pathname === window.location.pathname && url.hash) return false;
-
-                return true;
-            };
-
-            const handleLinkClick = (event) => {
-                if (event.defaultPrevented) return;
-                if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
-
-                const link = event.currentTarget;
-                if (!shouldAnimateLink(link)) return;
-
-                event.preventDefault();
-                
-                coverAndNavigate(new URL(link.getAttribute("href"), window.location.href).href);
-            };
-
-            // Only attach to nav menu links (nav-link class and navbar-brand)
-            document.querySelectorAll("nav .nav-link[href], nav .navbar-brand[href]").forEach((link) => {
-                link.addEventListener("click", handleLinkClick);
-            });
-            
-            // Handle browser back/forward buttons
-            window.addEventListener("popstate", async (event) => {
-                if (isNavigating) return;
-                
-                const url = window.location.href;
-                isNavigating = true;
-                
-                // Pick a random direction
-                const dir = directions[Math.floor(Math.random() * directions.length)];
-                applyDirection(dir);
-                
-                overlay.classList.add("is-active");
-                overlay.style.pointerEvents = "auto";
-                
-                // Start fetching and animating
-                const fetchPromise = fetchPage(url);
-                tl.play(0);
-                
-                const animationComplete = new Promise((resolve) => {
-                    tl.eventCallback("onComplete", resolve);
-                });
-                
-                try {
-                    const [, html] = await Promise.all([animationComplete, fetchPromise]);
-                    
-                    // Swap content without pushing state (we're responding to popstate)
-                    const parser = new DOMParser();
-                    const newDoc = parser.parseFromString(html, "text/html");
-                    
-                    document.title = newDoc.title;
-                    
-                    // Reset body styles (Bootstrap offcanvas may have set overflow:hidden)
-                    document.body.style.overflow = '';
-                    document.body.style.paddingRight = '';
-                    document.body.classList.remove('offcanvas-open');
-                    
-                    // Remove any leftover Bootstrap backdrops
-                    document.querySelectorAll('.offcanvas-backdrop').forEach(el => el.remove());
-                    
-                    const newMain = newDoc.querySelector("main");
-                    const currentMain = document.querySelector("main");
-                    if (newMain && currentMain) {
-                        currentMain.innerHTML = newMain.innerHTML;
-                    }
-                    
-                    const newHeader = newDoc.querySelector("header");
-                    const currentHeader = document.querySelector("header");
-                    if (newHeader && currentHeader) {
-                        currentHeader.innerHTML = newHeader.innerHTML;
-                    }
-                    
-                    const newFooter = newDoc.querySelector("footer");
-                    const currentFooter = document.querySelector("footer");
-                    if (newFooter && currentFooter) {
-                        currentFooter.innerHTML = newFooter.innerHTML;
-                    }
-                    
-                    window.scrollTo(0, 0);
-                    
-                    initProjectPreviews();
-                    initLazyRender();
-                    initScrollReveal();
-                    
-                    // Re-initialize Bootstrap components
-                    if (window.bootstrap) {
-                        document.querySelectorAll('[data-bs-toggle="collapse"]').forEach((el) => {
-                            new bootstrap.Collapse(el, { toggle: false });
-                        });
-                        document.querySelectorAll('.offcanvas').forEach((el) => {
-                            new bootstrap.Offcanvas(el);
-                        });
-                    }
-                    
-                    // Re-attach to nav menu links only
-                    document.querySelectorAll("nav .nav-link[href], nav .navbar-brand[href]").forEach((link) => {
-                        link.removeEventListener("click", handleLinkClick);
-                        link.addEventListener("click", handleLinkClick);
-                    });
-                    
-                    revealPage();
-                } catch (error) {
-                    window.location.reload();
-                }
             });
 
             if (shouldRevealOnLoad) {
@@ -662,7 +582,13 @@ const initPageTransitions = () => {
                 }
                 
                 // Reveal animation
-                revealPage();
+                const revealTl = gsapLib.timeline();
+                revealTl.to(path, { attr: { d: shapes.mid }, ease: "power2.in", duration: 0.45 })
+                    .to(path, { attr: { d: shapes.hidden }, ease: "power2.out", duration: 0.45 })
+                    .eventCallback("onComplete", () => {
+                        overlay.classList.remove("is-active");
+                        overlay.style.pointerEvents = "none";
+                    });
             }
         })
         .catch(() => {
