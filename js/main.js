@@ -1,9 +1,50 @@
 document.documentElement.classList.add("js-enabled");
 
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const pageTransitionFlagKey = "page-transition-pending";
+
+// Immediately cover the page if we're coming from a transition (before anything renders)
+const shouldRevealOnLoad = sessionStorage.getItem(pageTransitionFlagKey) === "true";
+let earlyOverlay = null;
+if (shouldRevealOnLoad && !prefersReducedMotion) {
+    earlyOverlay = document.createElement("div");
+    earlyOverlay.id = "early-page-cover";
+    earlyOverlay.style.cssText = "position:fixed;inset:0;background:#111;z-index:99999;";
+    document.documentElement.appendChild(earlyOverlay);
+}
+
 let lazyFadeDurationMs = 800;
 let lastScrollY = window.scrollY;
 let lastScrollTime = performance.now();
+const gsapCdnUrl = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js";
+let gsapLoaderPromise = null;
+
+const loadGsap = () => {
+    if (window.gsap) {
+        return Promise.resolve(window.gsap);
+    }
+
+    if (gsapLoaderPromise) {
+        return gsapLoaderPromise;
+    }
+
+    gsapLoaderPromise = new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = gsapCdnUrl;
+        script.async = true;
+        script.onload = () => {
+            if (window.gsap) {
+                resolve(window.gsap);
+            } else {
+                reject(new Error("GSAP loaded but window.gsap is missing"));
+            }
+        };
+        script.onerror = () => reject(new Error("Failed to load GSAP"));
+        document.head.appendChild(script);
+    });
+
+    return gsapLoaderPromise;
+};
 
 const updateLazyFadeDuration = (speed) => {
     // speed: px per ms
@@ -212,12 +253,142 @@ const initLazyRender = () => {
     });
 };
 
+const initPageTransitions = () => {
+    if (prefersReducedMotion) {
+        sessionStorage.removeItem(pageTransitionFlagKey);
+        if (earlyOverlay) {
+            earlyOverlay.remove();
+            earlyOverlay = null;
+        }
+        return;
+    }
+
+    // Clear the flag now that we've read it at the top of the file
+    sessionStorage.removeItem(pageTransitionFlagKey);
+
+    loadGsap()
+        .then((gsapLib) => {
+            const overlay = document.createElement("div");
+            overlay.className = "page-transition";
+            overlay.setAttribute("aria-hidden", "true");
+            overlay.innerHTML = `
+                <svg class="page-transition__svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMin slice">
+                    <defs>
+                        <linearGradient id="page-transition-gradient" x1="0" y1="0" x2="99" y2="99" gradientUnits="userSpaceOnUse">
+                            <stop offset="0.2" stop-color="rgba(0, 0, 0, 1)" />
+                            <stop offset="0.7" stop-color="rgba(0, 0, 0, 1)" />
+                        </linearGradient>
+                    </defs>
+                    <path class="page-transition__path" stroke="url(#page-transition-gradient)" fill="url(#page-transition-gradient)" d="M 0 100 V 100 Q 50 100 100 100 V 100 z" />
+                </svg>
+            `;
+            document.body.appendChild(overlay);
+
+            const path = overlay.querySelector(".page-transition__path");
+            const shapes = {
+                hidden: "M 0 100 V 100 Q 50 100 100 100 V 100 z",
+                mid: "M 0 100 V 50 Q 50 0 100 50 V 100 z",
+                full: "M 0 100 V 0 Q 50 0 100 0 V 100 z",
+            };
+
+            const tl = gsapLib.timeline({ paused: true });
+            tl.to(path, { attr: { d: shapes.mid }, ease: "power2.in", duration: 0.45 })
+                .to(path, { attr: { d: shapes.full }, ease: "power2.out", duration: 0.45 });
+
+            let pendingHref = null;
+
+            tl.eventCallback("onComplete", () => {
+                if (pendingHref) {
+                    window.location.href = pendingHref;
+                }
+            });
+
+            tl.eventCallback("onReverseComplete", () => {
+                overlay.classList.remove("is-active");
+                overlay.style.pointerEvents = "none";
+                pendingHref = null;
+            });
+
+            const coverAndNavigate = (href) => {
+                if (!href || tl.isActive()) return;
+
+                pendingHref = href;
+                sessionStorage.setItem(pageTransitionFlagKey, "true");
+                overlay.classList.add("is-active");
+                overlay.style.pointerEvents = "auto";
+                tl.play(0);
+            };
+
+            const shouldAnimateLink = (link) => {
+                const href = link.getAttribute("href") || "";
+                if (!href || href.startsWith("#")) return false;
+                if (href.startsWith("mailto:") || href.startsWith("tel:")) return false;
+
+                const target = link.getAttribute("target");
+                if (target && target !== "_self") return false;
+
+                const url = new URL(href, window.location.href);
+                if (url.origin !== window.location.origin) return false;
+
+                // Do not run the transition if we're only moving within the same page
+                if (url.pathname === window.location.pathname && url.hash) return false;
+
+                return true;
+            };
+
+            const handleLinkClick = (event) => {
+                if (event.defaultPrevented) return;
+                if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+
+                const link = event.currentTarget;
+                if (!shouldAnimateLink(link)) return;
+
+                event.preventDefault();
+                coverAndNavigate(new URL(link.getAttribute("href"), window.location.href).href);
+            };
+
+            document.querySelectorAll("a[href]").forEach((link) => {
+                link.addEventListener("click", handleLinkClick);
+            });
+
+            if (shouldRevealOnLoad) {
+                // Set path to full coverage before showing
+                path.setAttribute("d", shapes.full);
+                overlay.classList.add("is-active");
+                overlay.style.pointerEvents = "auto";
+                
+                // Remove the early cover now that GSAP overlay is ready
+                if (earlyOverlay) {
+                    earlyOverlay.remove();
+                    earlyOverlay = null;
+                }
+                
+                // Create a separate reverse timeline to avoid double animation
+                const revealTl = gsapLib.timeline();
+                revealTl.to(path, { attr: { d: shapes.mid }, ease: "power2.in", duration: 0.45 })
+                    .to(path, { attr: { d: shapes.hidden }, ease: "power2.out", duration: 0.45 })
+                    .eventCallback("onComplete", () => {
+                        overlay.classList.remove("is-active");
+                        overlay.style.pointerEvents = "none";
+                    });
+            }
+        })
+        .catch(() => {
+            // If GSAP fails to load, remove early overlay and fall back to default navigation.
+            if (earlyOverlay) {
+                earlyOverlay.remove();
+                earlyOverlay = null;
+            }
+        });
+};
+
 // Auto-load live previews for project cards immediately
-    document.addEventListener("DOMContentLoaded", () => {
-        initProjectPreviews();
-        initLazyRender();
-        initScrollReveal();
-    });
+document.addEventListener("DOMContentLoaded", () => {
+    initProjectPreviews();
+    initLazyRender();
+    initScrollReveal();
+    initPageTransitions();
+});
 
 // Back to top button visibility
 const backToTop = document.querySelector('.back-to-top');
