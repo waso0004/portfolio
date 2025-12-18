@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+<head>
+    <!-- Metadata and title for the webpage -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Portfolio</title>
+    <!-- Preconnect to Google Fonts for faster loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Preconnect to Figma and GitHub for faster project previews -->
+    <link rel="preconnect" href="https://www.figma.com">
+    <link rel="preconnect" href="https://waso0004.github.io">
+    <!-- Importing Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Hover.css -->
+    <link href="css/hover-min.css" rel="stylesheet">
+</head>
+<body class="bg-dark">
+    <!-- Skip link for keyboard navigation -->
+    <a href="#main-content" class="visually-hidden-focusable text-white">Skip to main content</a>
+
+    <header role="banner">
+        <!-- Full-width dark background for the header -->
+        <div class="container-fluid bg-dark">
+            <div class="container-sm bg-dark">
+                <!-- Navbar with Bootstrap classes -->
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark" role="navigation" aria-label="Main navigation">
+                    <div class="container-fluid">
+                        <!-- Brand logo -->
+                        <a class="navbar-brand fw-bold fs-2 m-0 p-0 hvr-grow" href="index.html" itemprop="url">K-</a>
+                        
+                        <!-- Navbar toggler for smaller screens -->
+                        <button class="navbar-toggler d-flex align-items-center text-white p-0 border-0 d-lg-none mt-3 mb-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop" aria-expanded="false" aria-label="Toggle navigation">
+                            <!-- Icon for the toggler -->
+                            <span class="navbar-toggler-icon fs-6 p-0"></span>
+                            <!-- Label for the toggler -->
+                            <span class="ms-2 fw-bold h6 m-0 ps-2">Menu</span>
+                        </button>
+                        
+                        <!-- Navbar links for larger screens -->
+                        <div class="collapse navbar-collapse d-none d-lg-block">
+                            <ul class="navbar-nav mt-2 mb-2 ms-auto">
+                                <!-- Link to the Home page -->
+                                <li class="nav-item hvr-grow">
+                                    <a class="nav-link text-white" href="index.html">Home</a>
+                                </li>
+                                <!-- Link to Projects page -->
+                                <li class="nav-item hvr-grow">
+                                    <a class="nav-link text-white pb-0 active" href="projects.html" aria-current="page">Projects</a>
+                                </li>
+                                <!-- Link to the Resume page -->
+                                <li class="nav-item hvr-grow">
+                                    <a class="nav-link text-white" href="about.html">Resume</a>
+                                </li>
+                                <!-- Link to the Contact page -->
+                                <li class="nav-item hvr-grow">
+                                    <a class="nav-link text-white" href="contact.html">Contact</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Offcanvas menu for smaller screens -->
+                    <div class="offcanvas offcanvas-top bg-dark text-white d-lg-none" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel" role="dialog" aria-modal="true">
+                        <div class="offcanvas-header">
+                            <!-- Offcanvas title and close button -->
+                            <div class="offcanvas-title mx-auto" id="offcanvasTopLabel"></div>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body d-flex justify-content-center p-0">
+                            <!-- Offcanvas navigation links -->
+                            <ul class="nav flex-row text-center">
+                                <!-- Link to the Home page -->
+                                <li class="nav-item">
+                                    <a class="nav-link pb-0 text-white" href="index.html">Home</a>
+                                </li>
+                                <!-- Link to Projects page -->
+                                <li class="nav-item">
+                                    <a class="nav-link pb-0 text-white active" href="projects.html" aria-current="page">Projects</a>
+                                </li>
+                                <!-- Link to the Resume page -->
+                                <li class="nav-item">
+                                    <a class="nav-link pb-0 text-white" href="about.html">Resume</a>
+                                </li>
+                                <!-- Link to the Contact page -->
+                                <li class="nav-item">
+                                    <a class="nav-link pb-0 text-white" href="contact.html">Contact</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" role="main">
+        <!-- Projects section -->
+        <section id="projects" class="bg-light py-5" role="region" aria-labelledby="projects-heading">
+            <div class="container ps-5 pe-5">
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <p class="text-uppercase secondary fw-bold mb-2" id="projects-heading">Featured Projects</p>
+                        <h1 class="fw-bold mb-0">Recent UX and web builds</h1>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-6">
+                        <div class="card shadow-sm border-0 project-card">
+                            <div class="card-body p-4">
+                                <p class="text-uppercase small text-muted mb-2">UI/UX · Product Design</p>
+                                <h2 class="card-title h4 mb-3">MealMate - Student food planner</h2>
+                                <p class="card-text">Figma case study covering research, IA, flows, and responsive prototypes for mobile and tablet. Built low-fi wires and high-fi visuals to validate the experience.</p>
+                                <div class="row g-3 mb-3">
+                                    <div class="col-sm-6">
+                                        <div class="project-preview hvr-grow" data-type="figma" data-figma-url="https://www.figma.com/proto/XwLlEgZSxto4KHpIDVK8XC/MealMate-App---Complete-Prototype?node-id=541-3857&p=f&t=Cov3OsMxL6C48Zvp-1&scaling=scale-down&content-scaling=fixed&page-id=418%3A4881&starting-point-node-id=541%3A3857">
+                                            <span class="preview-label fw-semibold">Lo-fi Mobile</span>
+                                            <p class="small text-muted mb-2">Early wireframes for quick iteration</p>
+                                            <div class="preview-actions mt-2">
+                                                <a class="btn btn-sm btn-outline-dark" href="https://www.figma.com/proto/XwLlEgZSxto4KHpIDVK8XC/MealMate-App---Complete-Prototype?node-id=541-3857&p=f&t=Cov3OsMxL6C48Zvp-1&scaling=scale-down&content-scaling=fixed&page-id=418%3A4881&starting-point-node-id=541%3A3857" target="_blank" rel="noopener noreferrer">Open in new tab</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="project-preview hvr-grow" data-type="figma" data-figma-url="https://www.figma.com/proto/XwLlEgZSxto4KHpIDVK8XC/MealMate-App---Complete-Prototype?node-id=548-4220&p=f&t=mUAC2NWTve1f5MpE-1&scaling=scale-down&content-scaling=fixed&page-id=418%3A4882&starting-point-node-id=548%3A4220">
+                                            <span class="preview-label fw-semibold">Lo-fi Tablet</span>
+                                            <p class="small text-muted mb-2">Responsive layout exploration</p>
+                                            <div class="preview-actions mt-2">
+                                                <a class="btn btn-sm btn-outline-dark" href="https://www.figma.com/proto/XwLlEgZSxto4KHpIDVK8XC/MealMate-App---Complete-Prototype?node-id=548-4220&p=f&t=mUAC2NWTve1f5MpE-1&scaling=scale-down&content-scaling=fixed&page-id=418%3A4882&starting-point-node-id=548%3A4220" target="_blank" rel="noopener noreferrer">Open in new tab</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="project-preview hvr-grow" data-type="figma" data-figma-url="https://www.figma.com/proto/XwLlEgZSxto4KHpIDVK8XC/MealMate-App---Complete-Prototype?node-id=1182-30075&p=f&t=AEuucyHBFplO68EW-1&scaling=scale-down&content-scaling=fixed&page-id=1057%3A2300&starting-point-node-id=1182%3A30075">
+                                            <span class="preview-label fw-semibold">Hi-fi Mobile</span>
+                                            <p class="small text-muted mb-2">Final visual design with interactions</p>
+                                            <div class="preview-actions mt-2">
+                                                <a class="btn btn-sm btn-outline-dark" href="https://www.figma.com/proto/XwLlEgZSxto4KHpIDVK8XC/MealMate-App---Complete-Prototype?node-id=1182-30075&p=f&t=iR2UVYm79SYdVT25-1&scaling=scale-down&content-scaling=fixed&page-id=1057%3A2300&starting-point-node-id=1182%3A30075" target="_blank" rel="noopener noreferrer">Open in new tab</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="project-preview hvr-grow" data-type="figma" data-figma-url="https://www.figma.com/proto/XwLlEgZSxto4KHpIDVK8XC/MealMate-App---Complete-Prototype?node-id=1245-10395&p=f&t=2zgphJi9F3ZLU8HQ-1&scaling=scale-down&content-scaling=fixed&page-id=1057%3A2301&starting-point-node-id=1245%3A10395">
+                                            <span class="preview-label fw-semibold">Hi-fi Tablet</span>
+                                            <p class="small text-muted mb-2">Polished tablet experience</p>
+                                            <div class="preview-actions mt-2">
+                                                <a class="btn btn-sm btn-outline-dark" href="https://www.figma.com/proto/XwLlEgZSxto4KHpIDVK8XC/MealMate-App---Complete-Prototype?node-id=1245-10395&t=ePnL89g8bwK0Sqzc-1&scaling=scale-down&content-scaling=fixed&page-id=1057%3A2301&starting-point-node-id=1245%3A10395&show-proto-sidebar=1" target="_blank" rel="noopener noreferrer">Open in new tab</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2 mb-0">
+                                    <span class="badge bg-light text-dark border">Figma</span>
+                                    <span class="badge bg-light text-dark border">Prototyping</span>
+                                    <span class="badge bg-light text-dark border">Responsive</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card h-100 shadow-sm border-0 project-card">
+                            <div class="card-body p-4">
+                                <p class="text-uppercase small text-muted mb-2">Front-end builds</p>
+                                <h2 class="card-title h4 mb-3">Web experiments and demos</h2>
+                                <p class="card-text">A set of responsive web projects exploring APIs, layout systems, and interactive UI patterns.</p>
+                                <div class="row g-3 mb-3">
+                                    <div class="col-sm-6">
+                                        <div class="project-preview scaled-preview hvr-grow" data-type="site" data-preview-src="https://waso0004.github.io/pokedex-final-waso0004/">
+                                            <span class="preview-label fw-semibold">Pokedex Demo</span>
+                                            <p class="small text-muted mb-2">Pokemon API integration</p>
+                                            <div class="preview-actions mt-2">
+                                                <a class="btn btn-sm btn-outline-dark" href="https://waso0004.github.io/pokedex-final-waso0004/" target="_blank" rel="noopener noreferrer">Open in new tab</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="project-preview scaled-preview hvr-grow" data-type="site" data-preview-src="https://waso0004.github.io/mtm6302-capstone-waso0004/">
+                                            <span class="preview-label fw-semibold">Wikimedia Web App</span>
+                                            <p class="small text-muted mb-2">Wikimedia API integration</p>
+                                            <div class="preview-actions mt-2">
+                                                <a class="btn btn-sm btn-outline-dark" href="https://waso0004.github.io/mtm6302-capstone-waso0004/" target="_blank" rel="noopener noreferrer">Open in new tab</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="project-preview scaled-preview hvr-grow" data-type="site" data-preview-src="https://waso0004.github.io/interactive-gallery-waso0004/">
+                                            <span class="preview-label fw-semibold">Interactive Gallery</span>
+                                            <p class="small text-muted mb-2">Dynamic image gallery with filters</p>
+                                            <div class="preview-actions mt-2">
+                                                <a class="btn btn-sm btn-outline-dark" href="https://waso0004.github.io/interactive-gallery-waso0004/" target="_blank" rel="noopener noreferrer">Open in new tab</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="project-preview scaled-preview hvr-grow" data-type="site" data-preview-src="https://waso0004.github.io/mtm6201-midterm/">
+                                            <span class="preview-label fw-semibold">Real Estate Demo</span>
+                                            <p class="small text-muted mb-2">Responsive property listings site</p>
+                                            <div class="preview-actions mt-2">
+                                                <a class="btn btn-sm btn-outline-dark" href="https://waso0004.github.io/mtm6201-midterm/" target="_blank" rel="noopener noreferrer">Open in new tab</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2 mb-0">
+                                    <span class="badge bg-light text-dark border">HTML/CSS/JS</span>
+                                    <span class="badge bg-light text-dark border">API</span>
+                                    <span class="badge bg-light text-dark border">Interaction</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Back to Top Button -->
+    <a href="#" class="btn btn-dark back-to-top position-fixed bottom-0 end-0 m-4" aria-label="Back to top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
+        </svg>
+    </a>
+    <footer id="footer" class="bg-dark text-center text-white py-3" role="contentinfo">
+        <!-- Footer section with address and copyright -->
+        <div class="container">
+            <div class="row mt-4 mb-5">
+                <!-- Footer address on the left -->
+                <div class="col-md-6">
+                    <p class="text-color-secondary" itemprop="address">1385 Woodroffe Ave, Ottawa, ON K2G 1V8</p>
+                </div>
+                <!-- Footer copyright on the right -->
+                <div class="col-md-6">
+                    <p class="text-color-secondary">&copy; 2025 <span class="primary" itemprop="copyrightHolder">Krisada Wasoontarjaroen</span> | All Right Reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

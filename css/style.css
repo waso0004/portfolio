@@ -13,6 +13,34 @@ body {
 	font-family: "Roboto", sans-serif;
 }
 
+/* Scroll reveal animation */
+.scroll-reveal {
+	opacity: 0;
+	transform: translateY(18px);
+	transition: opacity 0.5s ease, transform 0.5s ease;
+	will-change: transform, opacity;
+}
+
+.scroll-reveal.is-visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.scroll-reveal.no-reveal {
+	transition-duration: 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.scroll-reveal {
+		transition: none;
+	}
+
+	.scroll-reveal {
+		opacity: 1;
+		transform: none;
+	}
+}
+
 /* Set a dark background color for elements with the .bg-dark class */
 .bg-dark {
 	background-color: var(--background-color-secondary) !important;
@@ -94,10 +122,164 @@ body {
 	bottom: 14vh; /* Position the arrow 14% from the bottom of the viewport */
 }
 
-/* Media query for screens wider than 992px */
+/* Light styling tweaks for project cards */
+.project-card .list-group-item {
+	border: 0;
+	border-bottom: 1px solid #e9ecef;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.project-card .list-group-item:last-child {
+	border-bottom: 0;
+}
+
+/* Resume card spacing */
+#resume .resume-grid {
+	display: grid;
+	gap: 1.5rem;
+}
+
 @media (min-width: 992px) {
-	/* Increase the underline width for active navigation links on larger screens */
-	.active::after {
-		width: 65%;
+	#resume .resume-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		align-items: stretch;
 	}
+
+	#resume .resume-grid .resume-card {
+		height: 100%;
+	}
+
+	#resume .resume-grid .resume-col-left {
+		grid-column: 1;
+	}
+
+	#resume .resume-grid .resume-col-right {
+		grid-column: 2;
+	}
+
+	#resume .resume-grid .resume-row-1 {
+		grid-row: 1;
+	}
+
+	#resume .resume-grid .resume-row-2 {
+		grid-row: 2;
+	}
+
+	#resume .resume-grid .resume-row-3 {
+		grid-row: 3;
+	}
+
+	#resume .resume-grid .resume-row-4 {
+		grid-row: 4;
+	}
+
+	#resume .resume-grid .resume-row-5 {
+		grid-row: 5;
+	}
+
+	#resume .resume-grid .resume-row-6 {
+		grid-row: 6;
+	}
+}
+
+#resume .resume-card .card-body {
+	line-height: 1.6;
+}
+
+#resume .resume-card .card-body > * {
+	margin: 0;
+}
+
+#resume .resume-card .card-body > * + * {
+	margin-top: 0.5rem;
+}
+
+#resume .resume-card .card-body h3 + * {
+	margin-top: 0.75rem;
+}
+
+#resume .resume-card ul {
+	padding-left: 1.1rem;
+}
+
+#resume .resume-card li + li {
+	margin-top: 0.35rem;
+}
+
+#resume .resume-card .small {
+	line-height: 1.45;
+}
+
+/* Preview blocks for project links */
+.project-preview {
+	border-radius: 12px;
+	background: #ffffff;
+	padding: 18px;
+	min-height: 140px;
+	position: relative;
+	overflow: hidden;
+	border: 1px solid #e9ecef;
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.project-preview iframe {
+	border: 0;
+	width: 100%;
+	height: 260px;
+	background: #000;
+	border-radius: 10px;
+}
+
+/* Scaled iframe for website demos - renders at natural desktop size */
+.project-preview.scaled-preview {
+	overflow: hidden;
+}
+
+.project-preview.scaled-preview iframe {
+	width: 200%;
+	height: 520px;
+	transform: scale(0.5);
+	transform-origin: top left;
+	margin-bottom: -260px;
+}
+
+.preview-placeholder {
+	position: relative;
+	z-index: 1;
+}
+
+.project-preview::after {
+	display: none;
+}
+
+/* Reduce hover grow effect intensity */
+.hvr-grow:hover,
+.hvr-grow:focus,
+.hvr-grow:active {
+	-webkit-transform: scale(1.02) !important;
+	transform: scale(1.02) !important;
+}
+
+/* Back to Top Button */
+.back-to-top {
+	z-index: 1000;
+	opacity: 0;
+	visibility: hidden;
+	border-radius: 50%;
+	width: 45px;
+	height: 45px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.back-to-top.show {
+	opacity: 0.8;
+	visibility: visible;
+}
+
+.back-to-top:hover {
+	opacity: 1;
 }
