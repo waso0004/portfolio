@@ -532,8 +532,8 @@ const initPageTransitions = () => {
                 tl.play(0);
             };
 
-            // Only attach click handlers to nav-link and navbar-brand elements
-            document.querySelectorAll("nav .nav-link, nav .navbar-brand").forEach((link) => {
+            // Only attach click handlers to nav-link and navbar-brand elements, plus .page-transition-link
+            document.querySelectorAll("nav .nav-link, nav .navbar-brand, .page-transition-link").forEach((link) => {
                 link.addEventListener("click", (event) => {
                     const href = link.getAttribute("href") || "";
                     
