@@ -265,6 +265,58 @@ const initPageTransitions = () => {
 
     // Clear the flag now that we've read it at the top of the file
     sessionStorage.removeItem(pageTransitionFlagKey);
+    
+    // LocalStorage cache for pages
+    const PAGE_CACHE_PREFIX = "page-cache-";
+    const PAGE_CACHE_TIME_PREFIX = "page-cache-time-";
+    const CACHE_DURATION = 1000 * 60 * 60; // 1 hour
+    
+    const getCachedPage = (url) => {
+        try {
+            const key = PAGE_CACHE_PREFIX + url;
+            const timeKey = PAGE_CACHE_TIME_PREFIX + url;
+            const cached = localStorage.getItem(key);
+            const cachedTime = localStorage.getItem(timeKey);
+            
+            if (cached && cachedTime) {
+                const age = Date.now() - parseInt(cachedTime, 10);
+                if (age < CACHE_DURATION) {
+                    return cached;
+                }
+                // Cache expired, remove it
+                localStorage.removeItem(key);
+                localStorage.removeItem(timeKey);
+            }
+        } catch (e) {
+            // localStorage might be full or disabled
+        }
+        return null;
+    };
+    
+    const setCachedPage = (url, html) => {
+        try {
+            const key = PAGE_CACHE_PREFIX + url;
+            const timeKey = PAGE_CACHE_TIME_PREFIX + url;
+            localStorage.setItem(key, html);
+            localStorage.setItem(timeKey, Date.now().toString());
+        } catch (e) {
+            // localStorage might be full, clear old caches
+            try {
+                Object.keys(localStorage).forEach((k) => {
+                    if (k.startsWith(PAGE_CACHE_PREFIX) || k.startsWith(PAGE_CACHE_TIME_PREFIX)) {
+                        localStorage.removeItem(k);
+                    }
+                });
+                localStorage.setItem(PAGE_CACHE_PREFIX + url, html);
+                localStorage.setItem(PAGE_CACHE_TIME_PREFIX + url, Date.now().toString());
+            } catch (e2) {
+                // Give up on caching
+            }
+        }
+    };
+    
+    // Cache current page on load
+    setCachedPage(window.location.href, document.documentElement.outerHTML);
 
     loadGsap()
         .then((gsapLib) => {
@@ -272,7 +324,7 @@ const initPageTransitions = () => {
             overlay.className = "page-transition";
             overlay.setAttribute("aria-hidden", "true");
             overlay.innerHTML = `
-                <svg class="page-transition__svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMin slice">
+                <svg class="page-transition__svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMin slice" style="transform: scaleY(-1);">
                     <defs>
                         <linearGradient id="page-transition-gradient" x1="0" y1="0" x2="99" y2="99" gradientUnits="userSpaceOnUse">
                             <stop offset="0.2" stop-color="rgba(0, 0, 0, 1)" />
@@ -295,28 +347,154 @@ const initPageTransitions = () => {
             tl.to(path, { attr: { d: shapes.mid }, ease: "power2.in", duration: 0.45 })
                 .to(path, { attr: { d: shapes.full }, ease: "power2.out", duration: 0.45 });
 
-            let pendingHref = null;
+            let pendingNavigation = null;
+            let isNavigating = false;
 
-            tl.eventCallback("onComplete", () => {
-                if (pendingHref) {
-                    window.location.href = pendingHref;
+            const svg = overlay.querySelector(".page-transition__svg");
+            
+            // Random directions: top, bottom, left, right
+            const directions = [
+                { name: 'top', transform: 'scaleY(-1)', left: '0', top: '-200%', width: '100%', height: '300%', marginLeft: '0', marginTop: '0' },
+                { name: 'bottom', transform: 'scaleY(1)', left: '0', top: '0', width: '100%', height: '300%', marginLeft: '0', marginTop: '0' },
+                { name: 'left', transform: 'rotate(90deg) scaleY(-1)', left: '50%', top: '50%', width: '300%', height: '300%', marginLeft: '-150%', marginTop: '-150%' },
+                { name: 'right', transform: 'rotate(-90deg) scaleY(-1)', left: '50%', top: '50%', width: '300%', height: '300%', marginLeft: '-150%', marginTop: '-150%' },
+            ];
+            
+            const applyDirection = (dir) => {
+                svg.style.transform = dir.transform;
+                svg.style.left = dir.left;
+                svg.style.top = dir.top;
+                svg.style.width = dir.width;
+                svg.style.height = dir.height;
+                svg.style.marginLeft = dir.marginLeft;
+                svg.style.marginTop = dir.marginTop;
+            };
+            
+            const swapPageContent = (html, url) => {
+                const parser = new DOMParser();
+                const newDoc = parser.parseFromString(html, "text/html");
+                
+                // Update title
+                document.title = newDoc.title;
+                
+                // Swap main content
+                const newMain = newDoc.querySelector("main");
+                const currentMain = document.querySelector("main");
+                if (newMain && currentMain) {
+                    currentMain.innerHTML = newMain.innerHTML;
                 }
-            });
+                
+                // Swap header (for active nav state)
+                const newHeader = newDoc.querySelector("header");
+                const currentHeader = document.querySelector("header");
+                if (newHeader && currentHeader) {
+                    currentHeader.innerHTML = newHeader.innerHTML;
+                }
+                
+                // Swap footer if different
+                const newFooter = newDoc.querySelector("footer");
+                const currentFooter = document.querySelector("footer");
+                if (newFooter && currentFooter) {
+                    currentFooter.innerHTML = newFooter.innerHTML;
+                }
+                
+                // Update URL
+                window.history.pushState({ url: url }, "", url);
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+                
+                // Re-initialize components
+                initProjectPreviews();
+                initLazyRender();
+                initScrollReveal();
+                
+                // Re-initialize Bootstrap components (collapse, offcanvas, etc.)
+                if (window.bootstrap) {
+                    // Initialize all collapse elements
+                    document.querySelectorAll('[data-bs-toggle="collapse"]').forEach((el) => {
+                        new bootstrap.Collapse(el, { toggle: false });
+                    });
+                    // Initialize all offcanvas elements
+                    document.querySelectorAll('.offcanvas').forEach((el) => {
+                        new bootstrap.Offcanvas(el);
+                    });
+                }
+                
+                // Re-attach link handlers to new content
+                document.querySelectorAll("a[href]").forEach((link) => {
+                    link.removeEventListener("click", handleLinkClick);
+                    link.addEventListener("click", handleLinkClick);
+                });
+                
+                // Cache the new page
+                setCachedPage(url, html);
+            };
+            
+            const fetchPage = async (url) => {
+                // Check cache first
+                const cached = getCachedPage(url);
+                if (cached) {
+                    return cached;
+                }
+                
+                // Fetch from network
+                const response = await fetch(url);
+                if (!response.ok) throw new Error("Failed to fetch page");
+                const html = await response.text();
+                return html;
+            };
+            
+            const revealPage = () => {
+                const revealTl = gsapLib.timeline();
+                revealTl.to(path, { attr: { d: shapes.mid }, ease: "power2.in", duration: 0.45 })
+                    .to(path, { attr: { d: shapes.hidden }, ease: "power2.out", duration: 0.45 })
+                    .eventCallback("onComplete", () => {
+                        overlay.classList.remove("is-active");
+                        overlay.style.pointerEvents = "none";
+                        isNavigating = false;
+                    });
+            };
 
-            tl.eventCallback("onReverseComplete", () => {
-                overlay.classList.remove("is-active");
-                overlay.style.pointerEvents = "none";
-                pendingHref = null;
-            });
+            const coverAndNavigate = async (href) => {
+                if (!href || isNavigating) return;
 
-            const coverAndNavigate = (href) => {
-                if (!href || tl.isActive()) return;
-
-                pendingHref = href;
-                sessionStorage.setItem(pageTransitionFlagKey, "true");
+                isNavigating = true;
+                pendingNavigation = href;
+                
+                // Pick a random direction
+                const dir = directions[Math.floor(Math.random() * directions.length)];
+                applyDirection(dir);
+                
+                // Store direction for reveal
+                sessionStorage.setItem("page-transition-dir", JSON.stringify(dir));
+                
                 overlay.classList.add("is-active");
                 overlay.style.pointerEvents = "auto";
+                
+                // Start fetching page in parallel with animation
+                const fetchPromise = fetchPage(href);
+                
+                // Play cover animation
                 tl.play(0);
+                
+                // Wait for both animation and fetch to complete
+                const animationComplete = new Promise((resolve) => {
+                    tl.eventCallback("onComplete", resolve);
+                });
+                
+                try {
+                    const [, html] = await Promise.all([animationComplete, fetchPromise]);
+                    
+                    // Swap content
+                    swapPageContent(html, href);
+                    
+                    // Reveal the new page
+                    revealPage();
+                } catch (error) {
+                    // Fallback to traditional navigation on error
+                    window.location.href = href;
+                }
             };
 
             const shouldAnimateLink = (link) => {
@@ -344,14 +522,100 @@ const initPageTransitions = () => {
                 if (!shouldAnimateLink(link)) return;
 
                 event.preventDefault();
+                
                 coverAndNavigate(new URL(link.getAttribute("href"), window.location.href).href);
             };
 
             document.querySelectorAll("a[href]").forEach((link) => {
                 link.addEventListener("click", handleLinkClick);
             });
+            
+            // Handle browser back/forward buttons
+            window.addEventListener("popstate", async (event) => {
+                if (isNavigating) return;
+                
+                const url = window.location.href;
+                isNavigating = true;
+                
+                // Pick a random direction
+                const dir = directions[Math.floor(Math.random() * directions.length)];
+                applyDirection(dir);
+                
+                overlay.classList.add("is-active");
+                overlay.style.pointerEvents = "auto";
+                
+                // Start fetching and animating
+                const fetchPromise = fetchPage(url);
+                tl.play(0);
+                
+                const animationComplete = new Promise((resolve) => {
+                    tl.eventCallback("onComplete", resolve);
+                });
+                
+                try {
+                    const [, html] = await Promise.all([animationComplete, fetchPromise]);
+                    
+                    // Swap content without pushing state (we're responding to popstate)
+                    const parser = new DOMParser();
+                    const newDoc = parser.parseFromString(html, "text/html");
+                    
+                    document.title = newDoc.title;
+                    
+                    const newMain = newDoc.querySelector("main");
+                    const currentMain = document.querySelector("main");
+                    if (newMain && currentMain) {
+                        currentMain.innerHTML = newMain.innerHTML;
+                    }
+                    
+                    const newHeader = newDoc.querySelector("header");
+                    const currentHeader = document.querySelector("header");
+                    if (newHeader && currentHeader) {
+                        currentHeader.innerHTML = newHeader.innerHTML;
+                    }
+                    
+                    const newFooter = newDoc.querySelector("footer");
+                    const currentFooter = document.querySelector("footer");
+                    if (newFooter && currentFooter) {
+                        currentFooter.innerHTML = newFooter.innerHTML;
+                    }
+                    
+                    window.scrollTo(0, 0);
+                    
+                    initProjectPreviews();
+                    initLazyRender();
+                    initScrollReveal();
+                    
+                    // Re-initialize Bootstrap components
+                    if (window.bootstrap) {
+                        document.querySelectorAll('[data-bs-toggle="collapse"]').forEach((el) => {
+                            new bootstrap.Collapse(el, { toggle: false });
+                        });
+                        document.querySelectorAll('.offcanvas').forEach((el) => {
+                            new bootstrap.Offcanvas(el);
+                        });
+                    }
+                    
+                    document.querySelectorAll("a[href]").forEach((link) => {
+                        link.removeEventListener("click", handleLinkClick);
+                        link.addEventListener("click", handleLinkClick);
+                    });
+                    
+                    revealPage();
+                } catch (error) {
+                    window.location.reload();
+                }
+            });
 
             if (shouldRevealOnLoad) {
+                // Get stored direction from previous page
+                const storedDir = sessionStorage.getItem("page-transition-dir");
+                sessionStorage.removeItem("page-transition-dir");
+                
+                if (storedDir) {
+                    const dir = JSON.parse(storedDir);
+                    applyDirection(dir);
+                }
+                
                 // Set path to full coverage before showing
                 path.setAttribute("d", shapes.full);
                 overlay.classList.add("is-active");
@@ -363,14 +627,8 @@ const initPageTransitions = () => {
                     earlyOverlay = null;
                 }
                 
-                // Create a separate reverse timeline to avoid double animation
-                const revealTl = gsapLib.timeline();
-                revealTl.to(path, { attr: { d: shapes.mid }, ease: "power2.in", duration: 0.45 })
-                    .to(path, { attr: { d: shapes.hidden }, ease: "power2.out", duration: 0.45 })
-                    .eventCallback("onComplete", () => {
-                        overlay.classList.remove("is-active");
-                        overlay.style.pointerEvents = "none";
-                    });
+                // Reveal animation
+                revealPage();
             }
         })
         .catch(() => {
