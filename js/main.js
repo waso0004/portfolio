@@ -266,10 +266,20 @@ const initPageTransitions = () => {
     // Clear the flag now that we've read it at the top of the file
     sessionStorage.removeItem(pageTransitionFlagKey);
     
-    // LocalStorage cache for pages
-    const PAGE_CACHE_PREFIX = "page-cache-";
-    const PAGE_CACHE_TIME_PREFIX = "page-cache-time-";
+    // LocalStorage cache for pages - with version to invalidate old caches
+    const CACHE_VERSION = "v4";
+    const PAGE_CACHE_PREFIX = "page-cache-" + CACHE_VERSION + "-";
+    const PAGE_CACHE_TIME_PREFIX = "page-cache-time-" + CACHE_VERSION + "-";
     const CACHE_DURATION = 1000 * 60 * 60; // 1 hour
+    
+    // Clear old cache versions on load
+    try {
+        Object.keys(localStorage).forEach((key) => {
+            if ((key.startsWith("page-cache-") || key.startsWith("page-cache-time-")) && !key.includes(CACHE_VERSION)) {
+                localStorage.removeItem(key);
+            }
+        });
+    } catch (e) {}
     
     const getCachedPage = (url) => {
         try {
@@ -377,6 +387,14 @@ const initPageTransitions = () => {
                 // Update title
                 document.title = newDoc.title;
                 
+                // Reset body styles (Bootstrap offcanvas may have set overflow:hidden)
+                document.body.style.overflow = '';
+                document.body.style.paddingRight = '';
+                document.body.classList.remove('offcanvas-open');
+                
+                // Remove any leftover Bootstrap backdrops
+                document.querySelectorAll('.offcanvas-backdrop').forEach(el => el.remove());
+                
                 // Swap main content
                 const newMain = newDoc.querySelector("main");
                 const currentMain = document.querySelector("main");
@@ -421,8 +439,8 @@ const initPageTransitions = () => {
                     });
                 }
                 
-                // Re-attach link handlers to new content
-                document.querySelectorAll("a[href]").forEach((link) => {
+                // Re-attach link handlers to nav menu links only (not back-to-top, arrows, etc)
+                document.querySelectorAll("nav .nav-link[href], nav .navbar-brand[href]").forEach((link) => {
                     link.removeEventListener("click", handleLinkClick);
                     link.addEventListener("click", handleLinkClick);
                 });
@@ -498,8 +516,14 @@ const initPageTransitions = () => {
             };
 
             const shouldAnimateLink = (link) => {
+                // Exclude back-to-top button explicitly
+                if (link.classList.contains('back-to-top')) return false;
+                
+                // Only animate links inside nav elements
+                if (!link.closest('nav')) return false;
+                
                 const href = link.getAttribute("href") || "";
-                if (!href || href.startsWith("#")) return false;
+                if (!href || href === "#" || href.startsWith("#")) return false;
                 if (href.startsWith("mailto:") || href.startsWith("tel:")) return false;
 
                 const target = link.getAttribute("target");
@@ -526,7 +550,8 @@ const initPageTransitions = () => {
                 coverAndNavigate(new URL(link.getAttribute("href"), window.location.href).href);
             };
 
-            document.querySelectorAll("a[href]").forEach((link) => {
+            // Only attach to nav menu links (nav-link class and navbar-brand)
+            document.querySelectorAll("nav .nav-link[href], nav .navbar-brand[href]").forEach((link) => {
                 link.addEventListener("click", handleLinkClick);
             });
             
@@ -560,6 +585,14 @@ const initPageTransitions = () => {
                     const newDoc = parser.parseFromString(html, "text/html");
                     
                     document.title = newDoc.title;
+                    
+                    // Reset body styles (Bootstrap offcanvas may have set overflow:hidden)
+                    document.body.style.overflow = '';
+                    document.body.style.paddingRight = '';
+                    document.body.classList.remove('offcanvas-open');
+                    
+                    // Remove any leftover Bootstrap backdrops
+                    document.querySelectorAll('.offcanvas-backdrop').forEach(el => el.remove());
                     
                     const newMain = newDoc.querySelector("main");
                     const currentMain = document.querySelector("main");
@@ -595,7 +628,8 @@ const initPageTransitions = () => {
                         });
                     }
                     
-                    document.querySelectorAll("a[href]").forEach((link) => {
+                    // Re-attach to nav menu links only
+                    document.querySelectorAll("nav .nav-link[href], nav .navbar-brand[href]").forEach((link) => {
                         link.removeEventListener("click", handleLinkClick);
                         link.addEventListener("click", handleLinkClick);
                     });
