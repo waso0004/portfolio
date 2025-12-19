@@ -9,7 +9,7 @@ let earlyOverlay = null;
 if (shouldRevealOnLoad && !prefersReducedMotion) {
     earlyOverlay = document.createElement("div");
     earlyOverlay.id = "early-page-cover";
-    earlyOverlay.style.cssText = "position:fixed;inset:0;background:#111;z-index:99999;";
+    earlyOverlay.style.cssText = "position:fixed;inset:0;background:#000;z-index:99999;";
     document.documentElement.appendChild(earlyOverlay);
 }
 
@@ -615,11 +615,18 @@ const initPageTransitions = () => {
                 overlay.classList.add("is-active");
                 overlay.style.pointerEvents = "auto";
                 
-                // Remove the early cover now that GSAP overlay is ready
-                if (earlyOverlay) {
-                    earlyOverlay.remove();
-                    earlyOverlay = null;
-                }
+                // Remove the early cover after ensuring GSAP overlay is fully rendered
+                // Use setTimeout as fallback for mobile browsers
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        setTimeout(() => {
+                            if (earlyOverlay) {
+                                earlyOverlay.remove();
+                                earlyOverlay = null;
+                            }
+                        }, 16); // One frame delay (~16ms at 60fps)
+                    });
+                });
                 
                 // Reveal animation with calculated duration
                 const revealTl = gsapLib.timeline();
