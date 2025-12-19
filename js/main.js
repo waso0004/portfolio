@@ -87,9 +87,11 @@ const initProjectPreviews = () => {
         iframe.referrerPolicy = "no-referrer-when-downgrade";
         iframe.title = preview.querySelector(".preview-label")?.innerText || "Live preview";
 
-        // Preserve the label and action area, append iframe below.
+        // Preserve the label, description, and action area. Button should be last.
         const actions = preview.querySelector(".preview-actions");
+        const description = preview.querySelector("p.small.text-muted");
         preview.appendChild(iframe);
+        if (description) preview.appendChild(description);
         if (actions) preview.appendChild(actions);
 
         preview.dataset.loaded = "true";
@@ -482,27 +484,46 @@ const initPageTransitions = () => {
                 full: "M 0 100 V 0 Q 50 0 100 0 V 100 z",
             };
 
-            const tl = gsapLib.timeline({ paused: true });
-            tl.to(path, { attr: { d: shapes.mid }, ease: "power2.in", duration: 0.45 })
-                .to(path, { attr: { d: shapes.full }, ease: "power2.out", duration: 0.45 });
+            const baseDuration = 0.45;
+            
+            // Check if mobile viewport
+            const isMobile = () => window.innerWidth < 992;
+            
+            // Calculate duration based on direction to maintain consistent perceived speed
+            // Desktop: Side animations scale by square root of aspect ratio (less aggressive scaling)
+            // Mobile: Use fixed duration for all directions
+            const getDuration = (dirName) => {
+                if (!isMobile() && (dirName === 'left' || dirName === 'right')) {
+                    const aspectRatio = window.innerWidth / window.innerHeight;
+                    return baseDuration * Math.sqrt(aspectRatio);
+                }
+                return baseDuration;
+            };
+            
+            let currentTimeline = null;
 
             let pendingHref = null;
-
-            tl.eventCallback("onComplete", () => {
-                if (pendingHref) {
-                    window.location.href = pendingHref;
-                }
-            });
 
             const svg = overlay.querySelector(".page-transition__svg");
             
             // Random directions: top, bottom, left, right
-            const directions = [
-                { name: 'top', transform: 'scaleY(-1)', left: '0', top: '-200%', width: '100%', height: '300%', marginLeft: '0', marginTop: '0' },
-                { name: 'bottom', transform: 'scaleY(1)', left: '0', top: '0', width: '100%', height: '300%', marginLeft: '0', marginTop: '0' },
-                { name: 'left', transform: 'rotate(90deg) scaleY(-1)', left: '50%', top: '50%', width: '300%', height: '300%', marginLeft: '-150%', marginTop: '-150%' },
-                { name: 'right', transform: 'rotate(-90deg) scaleY(-1)', left: '50%', top: '50%', width: '300%', height: '300%', marginLeft: '-150%', marginTop: '-150%' },
-            ];
+            // Mobile uses different sizing for left/right to handle narrow viewports
+            const getDirections = () => {
+                if (isMobile()) {
+                    return [
+                        { name: 'top', transform: 'scaleY(-1)', left: '0', top: '-200%', width: '100%', height: '300%', marginLeft: '0', marginTop: '0' },
+                        { name: 'bottom', transform: 'scaleY(1)', left: '0', top: '0', width: '100%', height: '300%', marginLeft: '0', marginTop: '0' },
+                        { name: 'left', transform: 'rotate(90deg) scaleY(-1)', left: '50%', top: '50%', width: '300vh', height: '300vw', marginLeft: '-150vh', marginTop: '-150vw' },
+                        { name: 'right', transform: 'rotate(-90deg) scaleY(-1)', left: '50%', top: '50%', width: '300vh', height: '300vw', marginLeft: '-150vh', marginTop: '-150vw' },
+                    ];
+                }
+                return [
+                    { name: 'top', transform: 'scaleY(-1)', left: '0', top: '-200%', width: '100%', height: '300%', marginLeft: '0', marginTop: '0' },
+                    { name: 'bottom', transform: 'scaleY(1)', left: '0', top: '0', width: '100%', height: '300%', marginLeft: '0', marginTop: '0' },
+                    { name: 'left', transform: 'rotate(90deg) scaleY(-1)', left: '50%', top: '50%', width: '300%', height: '300%', marginLeft: '-150%', marginTop: '-150%' },
+                    { name: 'right', transform: 'rotate(-90deg) scaleY(-1)', left: '50%', top: '50%', width: '300%', height: '300%', marginLeft: '-150%', marginTop: '-150%' },
+                ];
+            };
             
             const applyDirection = (dir) => {
                 svg.style.transform = dir.transform;
@@ -515,13 +536,28 @@ const initPageTransitions = () => {
             };
 
             const coverAndNavigate = (href) => {
-                if (!href || tl.isActive()) return;
+                if (!href || (currentTimeline && currentTimeline.isActive())) return;
 
                 pendingHref = href;
                 
                 // Pick a random direction
+                const directions = getDirections();
                 const dir = directions[Math.floor(Math.random() * directions.length)];
                 applyDirection(dir);
+                
+                // Calculate duration based on direction
+                const duration = getDuration(dir.name);
+                
+                // Create timeline with calculated duration
+                currentTimeline = gsapLib.timeline();
+                currentTimeline.to(path, { attr: { d: shapes.mid }, ease: "power2.in", duration: duration })
+                    .to(path, { attr: { d: shapes.full }, ease: "power2.out", duration: duration });
+                
+                currentTimeline.eventCallback("onComplete", () => {
+                    if (pendingHref) {
+                        window.location.href = pendingHref;
+                    }
+                });
                 
                 // Store direction for reveal on next page
                 sessionStorage.setItem("page-transition-dir", JSON.stringify(dir));
@@ -529,7 +565,6 @@ const initPageTransitions = () => {
                 
                 overlay.classList.add("is-active");
                 overlay.style.pointerEvents = "auto";
-                tl.play(0);
             };
 
             // Only attach click handlers to nav-link and navbar-brand elements, plus .page-transition-link
@@ -565,10 +600,15 @@ const initPageTransitions = () => {
                 const storedDir = sessionStorage.getItem("page-transition-dir");
                 sessionStorage.removeItem("page-transition-dir");
                 
+                let dirName = 'top'; // default
                 if (storedDir) {
                     const dir = JSON.parse(storedDir);
                     applyDirection(dir);
+                    dirName = dir.name;
                 }
+                
+                // Calculate duration based on direction
+                const duration = getDuration(dirName);
                 
                 // Set path to full coverage before showing
                 path.setAttribute("d", shapes.full);
@@ -581,10 +621,10 @@ const initPageTransitions = () => {
                     earlyOverlay = null;
                 }
                 
-                // Reveal animation
+                // Reveal animation with calculated duration
                 const revealTl = gsapLib.timeline();
-                revealTl.to(path, { attr: { d: shapes.mid }, ease: "power2.in", duration: 0.45 })
-                    .to(path, { attr: { d: shapes.hidden }, ease: "power2.out", duration: 0.45 })
+                revealTl.to(path, { attr: { d: shapes.mid }, ease: "power2.in", duration: duration })
+                    .to(path, { attr: { d: shapes.hidden }, ease: "power2.out", duration: duration })
                     .eventCallback("onComplete", () => {
                         overlay.classList.remove("is-active");
                         overlay.style.pointerEvents = "none";

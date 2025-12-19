@@ -234,16 +234,35 @@ body {
 	line-height: 1.45;
 }
 
+/* Make preview card columns equal height */
+.project-card .row.g-3 {
+	align-items: stretch;
+}
+
+.project-card .row.g-3 > [class*="col-"] {
+	display: flex;
+}
+
 /* Preview blocks for project links */
 .project-preview {
 	border-radius: 12px;
 	background: #ffffff;
 	padding: 18px;
 	min-height: 140px;
+	width: 100%;
 	position: relative;
 	overflow: hidden;
 	border: 1px solid #e9ecef;
 	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+	display: flex !important;
+	flex-direction: column !important;
+}
+
+.project-preview .preview-label {
+	display: block;
+	margin-bottom: 0.5rem;
+	flex-shrink: 0;
+	order: 1;
 }
 
 .project-preview iframe {
@@ -252,6 +271,22 @@ body {
 	height: 260px;
 	background: #000;
 	border-radius: 10px;
+	flex-shrink: 0;
+	order: 2;
+}
+
+.project-preview p.small.text-muted {
+	flex: 1 1 auto;
+	margin-bottom: 0 !important;
+	margin-top: 0.5rem;
+	order: 3;
+}
+
+.project-preview .preview-actions {
+	margin-top: auto !important;
+	padding-top: 0.5rem;
+	flex-shrink: 0;
+	order: 4;
 }
 
 /* Scaled iframe for website demos - renders at natural desktop size */
@@ -265,6 +300,8 @@ body {
 	transform: scale(0.5);
 	transform-origin: top left;
 	margin-bottom: -260px;
+	flex-shrink: 0;
+	order: 2;
 }
 
 .preview-placeholder {
