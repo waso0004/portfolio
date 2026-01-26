@@ -107,110 +107,402 @@
                     <div class="col-12">
                         <p class="text-uppercase secondary fw-bold mb-2" id="projects-heading">Featured Projects</p>
                         <h1 class="fw-bold mb-0">Recent UX and web builds</h1>
+                        <div class="project-filter" role="group" aria-label="Filter projects by category">
+                            <button type="button" class="btn active" data-filter="all">All</button>
+                            <button type="button" class="btn" data-filter="ux">UX</button>
+                            <button type="button" class="btn" data-filter="web">Web</button>
+                        </div>
                     </div>
                 </div>
-                <div class="row g-4">
-                    <div class="col-lg-6">
+                <div class="row g-4" id="projects-grid">
+                    <div class="col-12 project-item" data-category="web">
+                        <div class="card shadow-sm border-0 project-card">
+                            <div class="card-body p-4">
+                                <p class="text-uppercase small text-muted mb-2">Full-Stack Development | E-Commerce Platform</p>
+                                <h2 class="card-title h4 mb-3">Yoonearthwork - Handcrafted Pottery E-Commerce Platform</h2>
+                                <p class="card-text mb-4">A full-stack e-commerce website designed for an artisan pottery business based in Ottawa, Canada. The platform features an elegant art gallery-inspired aesthetic that showcases handcrafted ceramics while providing a seamless shopping experience with integrated payments, shipping, and order management.</p>
+                                <div class="row g-4">
+                                    <div class="col-lg-6">
+                                        <div class="project-preview scaled-preview hvr-grow" data-type="site" data-preview-src="https://yoonearthwork.ca">
+                                            <span class="preview-label fw-semibold">Live Site</span>
+                                            <div class="preview-actions">
+                                                <a class="btn btn-sm btn-outline-dark" href="https://yoonearthwork.ca" target="_blank" rel="noopener noreferrer">Open in new tab</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="project-details-panel">
+                                            <h3 class="h6 fw-bold mb-2">Key Features</h3>
+                                            <ul class="small text-muted mb-3">
+                                                <li>Shopping cart with Square payment integration</li>
+                                                <li>Real-time shipping rates via Stallion Express API</li>
+                                                <li>Admin dashboard for products, orders, and settings</li>
+                                                <li>Automatic image optimization with Sharp</li>
+                                                <li>Order tracking and email notifications</li>
+                                                <li>SEO with Schema.org structured data</li>
+                                            </ul>
+                                            <h3 class="h6 fw-bold mb-2">Technical Highlights</h3>
+                                            <ul class="small text-muted mb-3">
+                                                <li>Node.js + Express.js backend with RESTful APIs</li>
+                                                <li>AES-256-CBC encryption for sensitive credentials</li>
+                                                <li>bcrypt password hashing with session authentication</li>
+                                                <li>Rate limiting and input validation</li>
+                                                <li>Deployed on Render with persistent storage</li>
+                                                <li>Memory-optimized for 512MB constraint</li>
+                                            </ul>
+                                            <div class="d-flex flex-wrap gap-2 mb-0">
+                                                <span class="badge bg-light text-dark border">Node.js</span>
+                                                <span class="badge bg-light text-dark border">Express.js</span>
+                                                <span class="badge bg-light text-dark border">Square API</span>
+                                                <span class="badge bg-light text-dark border">Stallion Express</span>
+                                                <span class="badge bg-light text-dark border">SQLite</span>
+                                                <span class="badge bg-light text-dark border">Nodemailer</span>
+                                                <span class="badge bg-light text-dark border">Sharp</span>
+                                                <span class="badge bg-light text-dark border">HTML/CSS/JS</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 project-item" data-category="web">
+                        <div class="card shadow-sm border-0 project-card">
+                            <div class="card-body p-4">
+                                <p class="text-uppercase small text-muted mb-2">Frontend Development | Web Tool</p>
+                                <h2 class="card-title h4 mb-3">Game Server Configuration Generator</h2>
+                                <p class="card-text mb-4">A web-based tool that helps game server administrators configure their servers without manually editing complex configuration files. Instead of navigating hundreds of settings in raw text files, users interact with a clean visual interface that organizes options into categories, provides helpful descriptions, and generates properly formatted files ready for use.</p>
+                                <div class="row g-4">
+                                    <div class="col-lg-6">
+                                        <div class="project-preview scaled-preview hvr-grow" data-type="site" data-preview-src="https://waso0004.github.io/Ark-Configuration-Files-Generator/">
+                                            <span class="preview-label fw-semibold">Live Demo</span>
+                                            <div class="preview-actions">
+                                                <a class="btn btn-sm btn-outline-dark" href="https://waso0004.github.io/Ark-Configuration-Files-Generator/" target="_blank" rel="noopener noreferrer">Open in new tab</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="project-details-panel">
+                                            <h3 class="h6 fw-bold mb-2">Key Features</h3>
+                                            <ul class="small text-muted mb-3">
+                                                <li>Visual form for 200+ configuration options</li>
+                                                <li>One-click presets for common configurations</li>
+                                                <li>Import existing config files via drag-and-drop</li>
+                                                <li>Export as ZIP, individual files, or clipboard</li>
+                                                <li>Auto-save progress in browser storage</li>
+                                                <li>Translated into 9 languages</li>
+                                            </ul>
+                                            <h3 class="h6 fw-bold mb-2">Technical Highlights</h3>
+                                            <ul class="small text-muted mb-3">
+                                                <li>Vanilla JavaScript single-page application</li>
+                                                <li>Custom file parser and generator</li>
+                                                <li>Data-driven form generation</li>
+                                                <li>Custom internationalization system</li>
+                                                <li>Client-side ZIP file creation</li>
+                                                <li>Responsive design with CSS variables</li>
+                                            </ul>
+                                            <div class="d-flex flex-wrap gap-2 mb-0">
+                                                <span class="badge bg-light text-dark border">JavaScript</span>
+                                                <span class="badge bg-light text-dark border">HTML5</span>
+                                                <span class="badge bg-light text-dark border">CSS3</span>
+                                                <span class="badge bg-light text-dark border">JSZip</span>
+                                                <span class="badge bg-light text-dark border">localStorage</span>
+                                                <span class="badge bg-light text-dark border">i18n</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 project-item" data-category="ux">
                         <div class="card shadow-sm border-0 project-card">
                             <div class="card-body p-4">
                                 <p class="text-uppercase small text-muted mb-2">UI/UX | User Experience Project Development</p>
                                 <h2 class="card-title h4 mb-3">MealMate - Meal Planning & Budgeting App</h2>
-                                <p class="card-text">MealMate is a UX project where my team designed a meal planning and budgeting app for both mobile and tablet. We started by defining the user problem, then validated it with research, including focus groups to understand what students and parents actually needed. From there, we created personas and user needs to guide our decisions, mapped the main user flows to plan the structure, and built lo-fi wireframes and a clickable prototype in Figma.</p>
-                                <div class="row g-3 mb-3">
-                                    <div class="col-sm-6">
+                                <p class="card-text mb-4">MealMate is a UX project where my team designed a meal planning and budgeting app for both mobile and tablet. We followed a complete UX process from research to high-fidelity prototypes, iterating based on real user feedback.</p>
+                                
+                                <!-- Step 1: Lo-fi Mobile -->
+                                <div class="row g-4 mb-4">
+                                    <div class="col-lg-6">
                                         <div class="project-preview hvr-grow" data-type="figma" data-figma-url="https://www.figma.com/proto/XwLlEgZSxto4KHpIDVK8XC/MealMate-App---Complete-Prototype?node-id=541-3857&p=f&t=Cov3OsMxL6C48Zvp-1&scaling=scale-down&content-scaling=fixed&page-id=418%3A4881&starting-point-node-id=541%3A3857">
-                                            <span class="preview-label fw-semibold">Lo-fi Mobile</span>
+                                            <span class="preview-label fw-semibold">Lo-fi Mobile Prototype</span>
                                             <p class="small text-muted mb-2">Early wireframes based on user flows and personas from our research</p>
                                             <div class="preview-actions">
                                                 <a class="btn btn-sm btn-outline-dark" href="https://www.figma.com/proto/XwLlEgZSxto4KHpIDVK8XC/MealMate-App---Complete-Prototype?node-id=541-3857&p=f&t=Cov3OsMxL6C48Zvp-1&scaling=scale-down&content-scaling=fixed&page-id=418%3A4881&starting-point-node-id=541%3A3857" target="_blank" rel="noopener noreferrer">Open in new tab</a>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-lg-6">
+                                        <div class="project-details-panel">
+                                            <h3 class="h6 fw-bold mb-2">Step 1: Research & Problem Definition</h3>
+                                            <p class="small text-muted mb-2">We started by defining the user problem and validating it through research. Conducted focus groups with students and parents to understand their actual needs around meal planning and budgeting.</p>
+                                            <ul class="small text-muted mb-0">
+                                                <li>User interviews and focus groups</li>
+                                                <li>Problem statement definition</li>
+                                                <li>Personas and user needs documentation</li>
+                                                <li>User flow mapping</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Step 2: Lo-fi Tablet -->
+                                <div class="row g-4 mb-4">
+                                    <div class="col-lg-6">
                                         <div class="project-preview hvr-grow" data-type="figma" data-figma-url="https://www.figma.com/proto/XwLlEgZSxto4KHpIDVK8XC/MealMate-App---Complete-Prototype?node-id=548-4220&p=f&t=mUAC2NWTve1f5MpE-1&scaling=scale-down&content-scaling=fixed&page-id=418%3A4882&starting-point-node-id=548%3A4220">
-                                            <span class="preview-label fw-semibold">Lo-fi Tablet</span>
+                                            <span class="preview-label fw-semibold">Lo-fi Tablet Prototype</span>
                                             <p class="small text-muted mb-2">Clickable prototype exploring responsive layout structure</p>
                                             <div class="preview-actions">
                                                 <a class="btn btn-sm btn-outline-dark" href="https://www.figma.com/proto/XwLlEgZSxto4KHpIDVK8XC/MealMate-App---Complete-Prototype?node-id=548-4220&p=f&t=mUAC2NWTve1f5MpE-1&scaling=scale-down&content-scaling=fixed&page-id=418%3A4882&starting-point-node-id=548%3A4220" target="_blank" rel="noopener noreferrer">Open in new tab</a>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-lg-6">
+                                        <div class="project-details-panel">
+                                            <h3 class="h6 fw-bold mb-2">Step 2: Responsive Layout Exploration</h3>
+                                            <p class="small text-muted mb-2">Extended the mobile design to tablet, exploring how the layout and navigation should adapt to larger screens while maintaining consistency.</p>
+                                            <ul class="small text-muted mb-0">
+                                                <li>Responsive layout structure</li>
+                                                <li>Navigation patterns for tablet</li>
+                                                <li>Content hierarchy adjustments</li>
+                                                <li>Clickable prototype for testing</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Step 3: Hi-fi Mobile -->
+                                <div class="row g-4 mb-4">
+                                    <div class="col-lg-6">
                                         <div class="project-preview hvr-grow" data-type="figma" data-figma-url="https://www.figma.com/proto/XwLlEgZSxto4KHpIDVK8XC/MealMate-App---Complete-Prototype?node-id=1182-30075&p=f&t=AEuucyHBFplO68EW-1&scaling=scale-down&content-scaling=fixed&page-id=1057%3A2300&starting-point-node-id=1182%3A30075">
-                                            <span class="preview-label fw-semibold">Hi-fi Mobile</span>
+                                            <span class="preview-label fw-semibold">Hi-fi Mobile Prototype</span>
                                             <p class="small text-muted mb-2">Improved labels, navigation, and tap targets based on Maze test results</p>
                                             <div class="preview-actions">
                                                 <a class="btn btn-sm btn-outline-dark" href="https://www.figma.com/proto/XwLlEgZSxto4KHpIDVK8XC/MealMate-App---Complete-Prototype?node-id=1182-30075&p=f&t=iR2UVYm79SYdVT25-1&scaling=scale-down&content-scaling=fixed&page-id=1057%3A2300&starting-point-node-id=1182%3A30075" target="_blank" rel="noopener noreferrer">Open in new tab</a>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-lg-6">
+                                        <div class="project-details-panel">
+                                            <h3 class="h6 fw-bold mb-2">Step 3: Usability Testing & Iteration</h3>
+                                            <p class="small text-muted mb-2">Ran Maze usability tests on the lo-fi prototypes. Analyzed success rates, mis-clicks, and drop-offs to identify pain points and areas for improvement.</p>
+                                            <ul class="small text-muted mb-0">
+                                                <li>Maze usability testing</li>
+                                                <li>Success rate and drop-off analysis</li>
+                                                <li>Improved labels and navigation clarity</li>
+                                                <li>Enhanced tap targets for mobile</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Step 4: Hi-fi Tablet -->
+                                <div class="row g-4 mb-4">
+                                    <div class="col-lg-6">
                                         <div class="project-preview hvr-grow" data-type="figma" data-figma-url="https://www.figma.com/proto/XwLlEgZSxto4KHpIDVK8XC/MealMate-App---Complete-Prototype?node-id=1245-10395&p=f&t=2zgphJi9F3ZLU8HQ-1&scaling=scale-down&content-scaling=fixed&page-id=1057%3A2301&starting-point-node-id=1245%3A10395">
-                                            <span class="preview-label fw-semibold">Hi-fi Tablet</span>
+                                            <span class="preview-label fw-semibold">Hi-fi Tablet Prototype</span>
                                             <p class="small text-muted mb-2">Polished prototype that better supports real tasks and feels easier to use</p>
                                             <div class="preview-actions">
                                                 <a class="btn btn-sm btn-outline-dark" href="https://www.figma.com/proto/XwLlEgZSxto4KHpIDVK8XC/MealMate-App---Complete-Prototype?node-id=1245-10395&t=ePnL89g8bwK0Sqzc-1&scaling=scale-down&content-scaling=fixed&page-id=1057%3A2301&starting-point-node-id=1245%3A10395&show-proto-sidebar=1" target="_blank" rel="noopener noreferrer">Open in new tab</a>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-lg-6">
+                                        <div class="project-details-panel">
+                                            <h3 class="h6 fw-bold mb-2">Step 4: Final High-Fidelity Prototype</h3>
+                                            <p class="small text-muted mb-2">Created polished hi-fi prototypes incorporating all feedback. The final design better supports real tasks and provides a smoother, more intuitive user experience.</p>
+                                            <ul class="small text-muted mb-0">
+                                                <li>Visual design and branding</li>
+                                                <li>Complete interactive prototype</li>
+                                                <li>Responsive tablet adaptation</li>
+                                                <li>Test report documentation</li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-                                <p class="card-text mt-3">After that, we ran Maze usability tests and wrote a test report using the results (success rates, mis-clicks, and drop-offs) to find where users got stuck. We used that feedback to improve labels, navigation clarity, and tap targets, then moved forward with a hi-fi interactive prototype that better supports real tasks and feels easier to use.</p>
+                                
                                 <div class="d-flex flex-wrap gap-2 mb-0">
                                     <span class="badge bg-light text-dark border">Figma</span>
                                     <span class="badge bg-light text-dark border">Prototyping</span>
+                                    <span class="badge bg-light text-dark border">User Research</span>
+                                    <span class="badge bg-light text-dark border">Usability Testing</span>
                                     <span class="badge bg-light text-dark border">Responsive</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <!-- Pokedex Project -->
+                    <div class="col-12 project-item" data-category="web">
                         <div class="card shadow-sm border-0 project-card">
                             <div class="card-body p-4">
-                                <p class="text-uppercase small text-muted mb-2">Front End Projects | Web Development with JavaScript</p>
-                                <h2 class="card-title h4 mb-3">Web Projects and Demos</h2>
-                                <p class="card-text">A set of responsive web projects exploring APIs, layout systems, and interactive UI patterns.</p>
-                                <div class="row g-3 mb-3">
-                                    <div class="col-sm-6">
+                                <p class="text-uppercase small text-muted mb-2">Frontend Development | API Integration</p>
+                                <h2 class="card-title h4 mb-3">Pokedex Web App</h2>
+                                <p class="card-text mb-4">A web app to browse and explore Pokémon using a live API. Focused on clear layout, JavaScript data fetching, and a clean, fast experience.</p>
+                                <div class="row g-4">
+                                    <div class="col-lg-6">
                                         <div class="project-preview scaled-preview hvr-grow" data-type="site" data-preview-src="https://waso0004.github.io/pokedex-final-waso0004/">
-                                            <span class="preview-label fw-semibold">Pokedex Demo</span>
+                                            <span class="preview-label fw-semibold">Live Demo</span>
                                             <div class="preview-actions">
                                                 <a class="btn btn-sm btn-outline-dark" href="https://waso0004.github.io/pokedex-final-waso0004/" target="_blank" rel="noopener noreferrer">Open in new tab</a>
                                             </div>
-                                            <p class="small text-muted mb-0 mt-2">A web app to browse and explore Pokémon using a live API. Focused on clear layout, JavaScript data fetching, and a clean, fast experience.</p>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <div class="project-preview scaled-preview hvr-grow" data-type="site" data-preview-src="https://waso0004.github.io/mtm6302-capstone-waso0004/">
-                                            <span class="preview-label fw-semibold">Wikimedia Web App</span>
-                                            <div class="preview-actions">
-                                                <a class="btn btn-sm btn-outline-dark" href="https://waso0004.github.io/mtm6302-capstone-waso0004/" target="_blank" rel="noopener noreferrer">Open in new tab</a>
+                                    <div class="col-lg-6">
+                                        <div class="project-details-panel">
+                                            <h3 class="h6 fw-bold mb-2">Key Features</h3>
+                                            <ul class="small text-muted mb-3">
+                                                <li>Live API data fetching from PokéAPI</li>
+                                                <li>Dynamic content rendering</li>
+                                                <li>Search and filter functionality</li>
+                                                <li>Responsive card layout</li>
+                                            </ul>
+                                            <h3 class="h6 fw-bold mb-2">Technical Highlights</h3>
+                                            <ul class="small text-muted mb-3">
+                                                <li>Async/await API calls</li>
+                                                <li>DOM manipulation</li>
+                                                <li>Event handling</li>
+                                                <li>CSS Grid layout</li>
+                                            </ul>
+                                            <div class="d-flex flex-wrap gap-2 mb-0">
+                                                <span class="badge bg-light text-dark border">JavaScript</span>
+                                                <span class="badge bg-light text-dark border">API</span>
+                                                <span class="badge bg-light text-dark border">HTML/CSS</span>
                                             </div>
-                                            <p class="small text-muted mb-0 mt-2">Pulls real content from the Wikimedia API into an easy browsing experience. Built around clean structure, clear feedback, and organized data display.</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="project-preview scaled-preview hvr-grow" data-type="site" data-preview-src="https://waso0004.github.io/interactive-gallery-waso0004/">
-                                            <span class="preview-label fw-semibold">Interactive Gallery</span>
-                                            <div class="preview-actions">
-                                                <a class="btn btn-sm btn-outline-dark" href="https://waso0004.github.io/interactive-gallery-waso0004/" target="_blank" rel="noopener noreferrer">Open in new tab</a>
-                                            </div>
-                                            <p class="small text-muted mb-0 mt-2">A dynamic image gallery with filters. Focused on smooth filtering, state changes, and a layout that stays clean as results update.</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="project-preview scaled-preview hvr-grow" data-type="site" data-preview-src="https://waso0004.github.io/mtm6201-midterm/">
-                                            <span class="preview-label fw-semibold">Real Estate Demo</span>
-                                            <div class="preview-actions">
-                                                <a class="btn btn-sm btn-outline-dark" href="https://waso0004.github.io/mtm6201-midterm/" target="_blank" rel="noopener noreferrer">Open in new tab</a>
-                                            </div>
-                                            <p class="small text-muted mb-0 mt-2">A responsive property listing site practicing clean layout, spacing, and mobile-first design with consistent typography across screen sizes.</p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="d-flex flex-wrap gap-2 mb-0">
-                                    <span class="badge bg-light text-dark border">HTML/CSS/JS</span>
-                                    <span class="badge bg-light text-dark border">API</span>
-                                    <span class="badge bg-light text-dark border">Interaction</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Wikimedia Project -->
+                    <div class="col-12 project-item" data-category="web">
+                        <div class="card shadow-sm border-0 project-card">
+                            <div class="card-body p-4">
+                                <p class="text-uppercase small text-muted mb-2">Frontend Development | API Integration</p>
+                                <h2 class="card-title h4 mb-3">Wikimedia Content Browser</h2>
+                                <p class="card-text mb-4">Pulls real content from the Wikimedia API into an easy browsing experience. Built around clean structure, clear feedback, and organized data display.</p>
+                                <div class="row g-4">
+                                    <div class="col-lg-6">
+                                        <div class="project-preview scaled-preview hvr-grow" data-type="site" data-preview-src="https://waso0004.github.io/mtm6302-capstone-waso0004/">
+                                            <span class="preview-label fw-semibold">Live Demo</span>
+                                            <div class="preview-actions">
+                                                <a class="btn btn-sm btn-outline-dark" href="https://waso0004.github.io/mtm6302-capstone-waso0004/" target="_blank" rel="noopener noreferrer">Open in new tab</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="project-details-panel">
+                                            <h3 class="h6 fw-bold mb-2">Key Features</h3>
+                                            <ul class="small text-muted mb-3">
+                                                <li>Wikimedia API integration</li>
+                                                <li>Content parsing and display</li>
+                                                <li>User feedback states</li>
+                                                <li>Organized data presentation</li>
+                                            </ul>
+                                            <h3 class="h6 fw-bold mb-2">Technical Highlights</h3>
+                                            <ul class="small text-muted mb-3">
+                                                <li>REST API consumption</li>
+                                                <li>JSON data parsing</li>
+                                                <li>Loading and error states</li>
+                                                <li>Responsive design</li>
+                                            </ul>
+                                            <div class="d-flex flex-wrap gap-2 mb-0">
+                                                <span class="badge bg-light text-dark border">JavaScript</span>
+                                                <span class="badge bg-light text-dark border">API</span>
+                                                <span class="badge bg-light text-dark border">HTML/CSS</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Interactive Gallery Project -->
+                    <div class="col-12 project-item" data-category="web">
+                        <div class="card shadow-sm border-0 project-card">
+                            <div class="card-body p-4">
+                                <p class="text-uppercase small text-muted mb-2">Frontend Development | Interactive UI</p>
+                                <h2 class="card-title h4 mb-3">Interactive Image Gallery</h2>
+                                <p class="card-text mb-4">A dynamic image gallery with filters. Focused on smooth filtering, state changes, and a layout that stays clean as results update.</p>
+                                <div class="row g-4">
+                                    <div class="col-lg-6">
+                                        <div class="project-preview scaled-preview hvr-grow" data-type="site" data-preview-src="https://waso0004.github.io/interactive-gallery-waso0004/">
+                                            <span class="preview-label fw-semibold">Live Demo</span>
+                                            <div class="preview-actions">
+                                                <a class="btn btn-sm btn-outline-dark" href="https://waso0004.github.io/interactive-gallery-waso0004/" target="_blank" rel="noopener noreferrer">Open in new tab</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="project-details-panel">
+                                            <h3 class="h6 fw-bold mb-2">Key Features</h3>
+                                            <ul class="small text-muted mb-3">
+                                                <li>Category filtering</li>
+                                                <li>Smooth state transitions</li>
+                                                <li>Dynamic layout updates</li>
+                                                <li>Interactive UI patterns</li>
+                                            </ul>
+                                            <h3 class="h6 fw-bold mb-2">Technical Highlights</h3>
+                                            <ul class="small text-muted mb-3">
+                                                <li>JavaScript filtering logic</li>
+                                                <li>CSS transitions</li>
+                                                <li>State management</li>
+                                                <li>Grid/Flexbox layout</li>
+                                            </ul>
+                                            <div class="d-flex flex-wrap gap-2 mb-0">
+                                                <span class="badge bg-light text-dark border">JavaScript</span>
+                                                <span class="badge bg-light text-dark border">CSS Animations</span>
+                                                <span class="badge bg-light text-dark border">HTML</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Real Estate Project -->
+                    <div class="col-12 project-item" data-category="web">
+                        <div class="card shadow-sm border-0 project-card">
+                            <div class="card-body p-4">
+                                <p class="text-uppercase small text-muted mb-2">Frontend Development | Responsive Design</p>
+                                <h2 class="card-title h4 mb-3">Real Estate Property Listing</h2>
+                                <p class="card-text mb-4">A responsive property listing site practicing clean layout, spacing, and mobile-first design with consistent typography across screen sizes.</p>
+                                <div class="row g-4">
+                                    <div class="col-lg-6">
+                                        <div class="project-preview scaled-preview hvr-grow" data-type="site" data-preview-src="https://waso0004.github.io/mtm6201-midterm/">
+                                            <span class="preview-label fw-semibold">Live Demo</span>
+                                            <div class="preview-actions">
+                                                <a class="btn btn-sm btn-outline-dark" href="https://waso0004.github.io/mtm6201-midterm/" target="_blank" rel="noopener noreferrer">Open in new tab</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="project-details-panel">
+                                            <h3 class="h6 fw-bold mb-2">Key Features</h3>
+                                            <ul class="small text-muted mb-3">
+                                                <li>Mobile-first responsive design</li>
+                                                <li>Clean layout and spacing</li>
+                                                <li>Consistent typography</li>
+                                                <li>Property card components</li>
+                                            </ul>
+                                            <h3 class="h6 fw-bold mb-2">Technical Highlights</h3>
+                                            <ul class="small text-muted mb-3">
+                                                <li>CSS media queries</li>
+                                                <li>Flexbox and Grid</li>
+                                                <li>Semantic HTML</li>
+                                                <li>Typography scale</li>
+                                            </ul>
+                                            <div class="d-flex flex-wrap gap-2 mb-0">
+                                                <span class="badge bg-light text-dark border">HTML</span>
+                                                <span class="badge bg-light text-dark border">CSS</span>
+                                                <span class="badge bg-light text-dark border">Responsive</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

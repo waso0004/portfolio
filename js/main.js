@@ -666,3 +666,35 @@ if (backToTop) {
         }
     });
 }
+
+// Project filter functionality
+const initProjectFilter = () => {
+    const filterButtons = document.querySelectorAll('.project-filter [data-filter]');
+    const projectItems = document.querySelectorAll('.project-item');
+    
+    if (!filterButtons.length || !projectItems.length) return;
+    
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const filter = button.dataset.filter;
+            
+            // Update active button state
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            
+            // Filter projects
+            projectItems.forEach(item => {
+                const category = item.dataset.category;
+                if (filter === 'all' || category === filter) {
+                    item.style.display = '';
+                    item.classList.remove('filtered-out');
+                } else {
+                    item.style.display = 'none';
+                    item.classList.add('filtered-out');
+                }
+            });
+        });
+    });
+};
+
+document.addEventListener('DOMContentLoaded', initProjectFilter);

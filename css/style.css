@@ -145,6 +145,52 @@ body {
 	bottom: 14vh; /* Position the arrow 14% from the bottom of the viewport */
 }
 
+/* Project filter buttons */
+.project-filter {
+	display: flex;
+	gap: 0.5rem;
+	margin-top: 1rem;
+}
+
+.project-filter .btn {
+	border: none;
+	background: transparent;
+	padding: 0.5rem 1rem;
+	font-size: 0.875rem;
+	font-weight: 500;
+	color: var(--text-color-secondary);
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	position: relative;
+	transition: color 0.2s ease;
+}
+
+.project-filter .btn::after {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 0;
+	height: 2px;
+	background-color: var(--secondary);
+	transition: width 0.2s ease;
+}
+
+.project-filter .btn:hover {
+	color: var(--secondary);
+	background: transparent;
+}
+
+.project-filter .btn.active {
+	color: var(--secondary);
+	background: transparent;
+}
+
+.project-filter .btn.active::after {
+	width: 50%;
+}
+
 /* Light styling tweaks for project cards */
 .project-card .list-group-item {
 	border: 0;
@@ -256,6 +302,34 @@ body {
 	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
 	display: flex !important;
 	flex-direction: column !important;
+	height: 100%;
+}
+
+/* Details panel with matching border style */
+.project-details-panel {
+	border-radius: 12px;
+	background: #ffffff;
+	padding: 18px;
+	width: 100%;
+	border: 1px solid #e9ecef;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.project-details-panel .d-flex.flex-wrap.gap-2 {
+	margin-top: auto;
+}
+
+/* Ensure equal height columns for project preview rows */
+.project-card .row.g-4 > [class*="col-"] {
+	display: flex;
+	flex-direction: column;
+}
+
+.project-card .row.g-4 > [class*="col-"] > .project-preview,
+.project-card .row.g-4 > [class*="col-"] > .project-details-panel {
+	flex: 1;
 }
 
 .project-preview .preview-label {
@@ -300,6 +374,17 @@ body {
 	transform: scale(0.5);
 	transform-origin: top left;
 	margin-bottom: -260px;
+	flex-shrink: 0;
+	order: 2;
+}
+
+/* Larger scaled preview for featured full-width projects */
+.project-preview.scaled-preview-lg iframe {
+	width: 200%;
+	height: 1000px;
+	transform: scale(0.5);
+	transform-origin: top left;
+	margin-bottom: -500px;
 	flex-shrink: 0;
 	order: 2;
 }
