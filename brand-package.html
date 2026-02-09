@@ -125,55 +125,115 @@
 
             <!-- Visual Inspiration / Moodboard -->
             <div class="row">
-                <div class="col-lg-4">
-                    <h3 class="h5 fw-bold">Visual Inspiration</h3>
-                    <p class="text-muted small">Moodboard rationale</p>
+                <div class="col-12">
+                    <h3 class="h5 fw-bold mb-1">Visual Inspiration</h3>
+                    <p class="text-muted small mb-3">Moodboard — the visual DNA of the brand</p>
                 </div>
-                <div class="col-lg-8">
-                    <div class="bp-moodboard p-4 rounded">
-                        <div class="row g-2 mb-3">
-                            <div class="col-3">
-                                <div class="bp-mood-swatch" style="background:#111111;"></div>
-                                <p class="small text-center mt-1 mb-0 text-muted">Deep black for drama and focus</p>
-                            </div>
-                            <div class="col-3">
-                                <div class="bp-mood-swatch" style="background:#7eb5be;"></div>
-                                <p class="small text-center mt-1 mb-0 text-muted">Teal accent for energy</p>
-                            </div>
-                            <div class="col-3">
-                                <div class="bp-mood-swatch" style="background:#005f6b;"></div>
-                                <p class="small text-center mt-1 mb-0 text-muted">Dark teal for headings</p>
-                            </div>
-                            <div class="col-3">
-                                <div class="bp-mood-swatch" style="background:#f3f7f6;"></div>
-                                <p class="small text-center mt-1 mb-0 text-muted">Off-white for readability</p>
+                <div class="col-12">
+                    <div class="bp-moodboard-grid">
+                        <!-- Row 1: Hero wordmark + portrait photo + colour swatches -->
+                        <div class="bp-mood-cell bp-mood-hero">
+                            <div class="h-100 d-flex flex-column justify-content-end p-3 rounded" style="background:linear-gradient(160deg,#111111 0%,#1a2a2d 60%,#111111 100%);">
+                                <span style="font-family:'Roboto Mono',monospace; font-size:3.5rem; font-weight:700; color:#f3f7f6; line-height:1;">K-</span>
+                                <span class="small mt-1" style="color:#7eb5be; letter-spacing:2px; text-transform:uppercase;">Minimal &middot; Functional &middot; Refined</span>
                             </div>
                         </div>
-                        <div class="row g-2 mb-3">
-                            <div class="col-6">
-                                <div class="p-2 bg-dark text-white rounded">
-                                    <p class="mb-0 small text-uppercase primary fw-bold">Font Inspiration</p>
-                                    <p style="font-family:'Roboto Mono',monospace;" class="fs-4 fw-bold mb-0">Roboto Mono</p>
-                                    <p class="small text-color-secondary mb-0">Monospace - technical, code-adjacent.</p>
+
+                        <div class="bp-mood-cell bp-mood-photo-portrait">
+                            <div class="bp-mood-img rounded" style="background-image:url('images/mood-code.jpg');"></div>
+                        </div>
+
+                        <div class="bp-mood-cell bp-mood-swatches">
+                            <div class="d-flex flex-column gap-2 h-100">
+                                <div class="flex-fill rounded position-relative" style="background:#111111; min-height:30px;">
+                                    <span class="position-absolute bottom-0 start-0 p-1" style="color:#787d81; font-size:.55rem;">#111111</span>
                                 </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="p-2 bg-dark text-white rounded">
-                                    <p class="mb-0 small text-uppercase primary fw-bold">Body Font</p>
-                                    <p style="font-family:'Roboto',sans-serif;" class="fs-4 fw-bold mb-0">Roboto</p>
-                                    <p class="small text-color-secondary mb-0">Clean sans-serif for readability.</p>
+                                <div class="flex-fill rounded position-relative" style="background:#005f6b; min-height:30px;">
+                                    <span class="position-absolute bottom-0 start-0 p-1" style="color:#a0d8e0; font-size:.55rem;">#005F6B</span>
+                                </div>
+                                <div class="flex-fill rounded position-relative" style="background:#7eb5be; min-height:30px;">
+                                    <span class="position-absolute bottom-0 start-0 p-1" style="color:#1a3a3f; font-size:.55rem;">#7EB5BE</span>
+                                </div>
+                                <div class="flex-fill rounded position-relative" style="background:#f3f7f6; border:1px solid #dee2e6; min-height:30px;">
+                                    <span class="position-absolute bottom-0 start-0 p-1" style="color:#787d81; font-size:.55rem;">#F3F7F6</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="p-2 bg-light rounded">
-                            <p class="small fw-bold mb-1">Inspiration notes:</p>
-                            <ul class="text-muted mb-0">
-                                <li><strong>Dark, high-contrast interfaces</strong> - Inspired by developer tools, code editors, and portfolio sites from studios like Instrument and Rally Interactive.</li>
-                                <li><strong>Monospace type treatments</strong> - Borrowed from terminal/code aesthetics. The "K-" wordmark signals a technical perspective.</li>
-                                <li><strong>Generous whitespace &amp; grid discipline</strong> - Inspired by Swiss/International Style principles.</li>
-                                <li><strong>Subtle motion &amp; micro-interactions</strong> - Hover grow, scroll reveals, page transitions - inspired by Awwwards sites.</li>
-                                <li><strong>Teal accent colour</strong> - Calm but distinctive. Technical yet human.</li>
-                            </ul>
+
+                        <!-- Row 2: Typography + banner photo -->
+                        <div class="bp-mood-cell bp-mood-type">
+                            <div class="h-100 p-3 rounded text-white d-flex flex-column" style="background:#1a1a1a;">
+                                <div class="mb-2">
+                                    <p class="mb-0 text-uppercase fw-bold" style="color:#7eb5be; font-size:.55rem; letter-spacing:2px;">Primary</p>
+                                    <p style="font-family:'Roboto Mono',monospace; font-size:1.5rem; font-weight:700; line-height:1.1;" class="mb-0">Roboto Mono</p>
+                                    <p class="mb-0" style="font-family:'Roboto Mono',monospace; color:#787d81; font-size:.55rem;">Wordmark · Headings · Code</p>
+                                </div>
+                                <div style="border-top:1px solid #2a2a2a; padding-top:.5rem;">
+                                    <p class="mb-0 text-uppercase fw-bold" style="color:#7eb5be; font-size:.55rem; letter-spacing:2px;">Secondary</p>
+                                    <p style="font-family:'Roboto',sans-serif; font-size:1.3rem; font-weight:700; line-height:1.1;" class="mb-0">Roboto</p>
+                                    <p class="mb-0" style="font-family:'Roboto',sans-serif; color:#787d81; font-size:.55rem;">Body · Navigation · Buttons</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bp-mood-cell bp-mood-photo-banner">
+                            <div class="bp-mood-img rounded" style="background-image:url('images/mood-dark-abstract.jpg');"></div>
+                        </div>
+
+                        <div class="bp-mood-cell bp-mood-weights">
+                            <div class="h-100 p-3 rounded d-flex flex-column justify-content-center" style="background:#f3f7f6;">
+                                <p class="mb-1 text-uppercase fw-bold" style="color:#005f6b; font-size:.55rem; letter-spacing:2px;">Weights</p>
+                                <p style="font-family:'Roboto',sans-serif; font-weight:300; font-size:.8rem; color:#111; line-height:1.5;" class="mb-0">Light 300</p>
+                                <p style="font-family:'Roboto',sans-serif; font-weight:400; font-size:.8rem; color:#111; line-height:1.5;" class="mb-0">Regular 400</p>
+                                <p style="font-family:'Roboto',sans-serif; font-weight:500; font-size:.8rem; color:#111; line-height:1.5;" class="mb-0">Medium 500</p>
+                                <p style="font-family:'Roboto',sans-serif; font-weight:700; font-size:.8rem; color:#111; line-height:1.5;" class="mb-0">Bold 700</p>
+                            </div>
+                        </div>
+
+                        <!-- Row 3: Accent + photo + code snippet -->
+                        <div class="bp-mood-cell bp-mood-accent">
+                            <div class="h-100 rounded d-flex align-items-center justify-content-center" style="background:#005f6b;">
+                                <span style="font-family:'Roboto Mono',monospace; font-size:1.1rem; font-weight:700; color:#f3f7f6; letter-spacing:3px; text-align:center;">DESIGN.<br>CAPTURE.<br>INSPIRE.</span>
+                            </div>
+                        </div>
+
+                        <div class="bp-mood-cell bp-mood-photo-work">
+                            <div class="bp-mood-img rounded" style="background-image:url('images/mood-tech.jpg');"></div>
+                        </div>
+
+                        <div class="bp-mood-cell bp-mood-ui">
+                            <div class="h-100 p-3 rounded d-flex flex-column" style="background:#1a1a1a; color:#f3f7f6;">
+                                <div class="d-flex gap-1 mb-2">
+                                    <span style="width:8px; height:8px; border-radius:50%; background:#ff5f57; display:inline-block;"></span>
+                                    <span style="width:8px; height:8px; border-radius:50%; background:#febc2e; display:inline-block;"></span>
+                                    <span style="width:8px; height:8px; border-radius:50%; background:#28c840; display:inline-block;"></span>
+                                </div>
+                                <p style="font-family:'Roboto Mono',monospace; font-size:.6rem; color:#7eb5be; margin-bottom:.2rem;"><span style="color:#787d81;">const</span> brand <span style="color:#787d81;">=</span> {</p>
+                                <p style="font-family:'Roboto Mono',monospace; font-size:.6rem; color:#f3f7f6; margin-bottom:.2rem;">&nbsp;&nbsp;style: <span style="color:#7eb5be;">'minimal'</span>,</p>
+                                <p style="font-family:'Roboto Mono',monospace; font-size:.6rem; color:#f3f7f6; margin-bottom:.2rem;">&nbsp;&nbsp;approach: <span style="color:#7eb5be;">'functional'</span>,</p>
+                                <p style="font-family:'Roboto Mono',monospace; font-size:.6rem; color:#f3f7f6; margin-bottom:.2rem;">&nbsp;&nbsp;attention: <span style="color:#7eb5be;">'detail-oriented'</span>,</p>
+                                <p style="font-family:'Roboto Mono',monospace; font-size:.6rem; color:#f3f7f6; margin-bottom:.2rem;">&nbsp;&nbsp;finish: <span style="color:#7eb5be;">'refined'</span>,</p>
+                                <p style="font-family:'Roboto Mono',monospace; font-size:.6rem; color:#f3f7f6; margin-bottom:.2rem;">&nbsp;&nbsp;focus: <span style="color:#7eb5be;">'user-centered'</span></p>
+                                <p style="font-family:'Roboto Mono',monospace; font-size:.6rem; color:#7eb5be; margin-bottom:0;">};</p>
+                            </div>
+                        </div>
+
+                        <!-- Row 4: Full-width type scale -->
+                        <div class="bp-mood-cell bp-mood-type-scale">
+                            <div class="h-100 px-3 py-2 rounded d-flex align-items-center" style="background:#1a1a1a;">
+                                <div class="d-flex align-items-center gap-3" style="flex:1;">
+                                    <span style="font-family:'Roboto Mono',monospace; font-size:1.8rem; font-weight:700; color:#f3f7f6; line-height:1;">Aa</span>
+                                    <span style="font-family:'Roboto Mono',monospace; font-size:.9rem; font-weight:700; color:#f3f7f6;">Hero Display</span>
+                                    <span style="font-family:'Roboto',sans-serif; font-size:.8rem; font-weight:700; color:#f3f7f6;">Section Heading</span>
+                                    <span style="font-family:'Roboto',sans-serif; font-size:.6rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#7eb5be;">LABEL</span>
+                                    <span style="font-family:'Roboto',sans-serif; font-size:.6rem; font-weight:400; color:#787d81;">Body copy</span>
+                                    <span style="font-family:'Roboto',sans-serif; font-size:.55rem; font-weight:300; font-style:italic; color:#555;">Muted italic</span>
+                                </div>
+                                <div class="d-flex gap-3" style="flex:0 0 auto;">
+                                    <span style="font-family:'Roboto Mono',monospace; font-size:.55rem; color:#787d81;">Roboto Mono 700</span>
+                                    <span style="font-family:'Roboto',sans-serif; font-size:.55rem; color:#787d81;">Roboto 300–700</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -284,48 +344,88 @@
                     <p class="text-color-secondary small">Primary + secondary font choices</p>
                 </div>
                 <div class="col-lg-8">
+                    <!-- Font specimens -->
                     <div class="row g-3 mb-3">
                         <div class="col-6">
                             <div class="p-3 rounded" style="background:#1a1a1a;">
-                                <p class="small text-uppercase primary fw-bold mb-2">Primary - Display &amp; Headings</p>
+                                <p class="small text-uppercase primary fw-bold mb-2">Primary — Display &amp; Headings</p>
                                 <p style="font-family:'Roboto Mono',monospace;" class="fs-3 fw-bold mb-1">Roboto Mono</p>
-                                <p style="font-family:'Roboto Mono',monospace;" class="small mb-0">ABCDEFGHIJKLM</p>
-                                <p style="font-family:'Roboto Mono',monospace;" class="small mb-0">nopqrstuvwxyz</p>
-                                <p style="font-family:'Roboto Mono',monospace;" class="small mb-2">0123456789</p>
-                                <p class="text-color-secondary mb-0">Used for the wordmark, hero headings, sub-headings. Weights: Bold (700) for headings, Regular (400) for supporting text.</p>
+                                <p style="font-family:'Roboto Mono',monospace;" class="small mb-0">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+                                <p style="font-family:'Roboto Mono',monospace;" class="small mb-0">abcdefghijklmnopqrstuvwxyz</p>
+                                <p style="font-family:'Roboto Mono',monospace;" class="small mb-2">0123456789 !@#$%&amp;*()-+=</p>
+                                <div class="d-flex flex-wrap gap-2 mt-2">
+                                    <span style="font-family:'Roboto Mono',monospace; font-weight:400; font-size:.7rem;" class="text-color-secondary">Regular 400</span>
+                                    <span style="font-family:'Roboto Mono',monospace; font-weight:700; font-size:.7rem;" class="text-white">Bold 700</span>
+                                </div>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="p-3 rounded" style="background:#1a1a1a;">
-                                <p class="small text-uppercase primary fw-bold mb-2">Secondary - Body &amp; UI</p>
+                                <p class="small text-uppercase primary fw-bold mb-2">Secondary — Body &amp; UI</p>
                                 <p style="font-family:'Roboto',sans-serif;" class="fs-3 fw-bold mb-1">Roboto</p>
-                                <p style="font-family:'Roboto',sans-serif;" class="small mb-0">ABCDEFGHIJKLM</p>
-                                <p style="font-family:'Roboto',sans-serif;" class="small mb-0">nopqrstuvwxyz</p>
-                                <p style="font-family:'Roboto',sans-serif;" class="small mb-2">0123456789</p>
-                                <p class="text-color-secondary mb-0">Used for body copy, navigation, buttons, form labels. Weights: Light (300), Regular (400), Semi-Bold (600), Bold (700).</p>
+                                <p style="font-family:'Roboto',sans-serif;" class="small mb-0">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+                                <p style="font-family:'Roboto',sans-serif;" class="small mb-0">abcdefghijklmnopqrstuvwxyz</p>
+                                <p style="font-family:'Roboto',sans-serif;" class="small mb-2">0123456789 !@#$%&amp;*()-+=</p>
+                                <div class="d-flex flex-wrap gap-2 mt-2">
+                                    <span style="font-family:'Roboto',sans-serif; font-weight:300; font-size:.7rem;" class="text-color-secondary">Light 300</span>
+                                    <span style="font-family:'Roboto',sans-serif; font-weight:400; font-size:.7rem;" class="text-color-secondary">Regular 400</span>
+                                    <span style="font-family:'Roboto',sans-serif; font-weight:600; font-size:.7rem;" class="text-white">Semi-Bold 600</span>
+                                    <span style="font-family:'Roboto',sans-serif; font-weight:700; font-size:.7rem;" class="text-white">Bold 700</span>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Live type scale -->
+                    <div class="p-3 rounded mb-3" style="background:#1a1a1a;">
+                        <p class="small text-uppercase primary fw-bold mb-2">Type Scale — Live Examples</p>
+                        <div class="mb-2 pb-2" style="border-bottom:1px solid #2a2a2a;">
+                            <p style="font-family:'Roboto Mono',monospace; font-size:2.5rem; font-weight:700; line-height:1; color:#f3f7f6;" class="mb-0">Digital</p>
+                            <p class="mb-0" style="font-size:.6rem; color:#787d81;">Hero Display — Roboto Mono 700 — 2.5rem</p>
+                        </div>
+                        <div class="mb-2 pb-2" style="border-bottom:1px solid #2a2a2a;">
+                            <p style="font-family:'Roboto',sans-serif; font-size:1.5rem; font-weight:700; color:#f3f7f6;" class="mb-0">Recent UX and web builds</p>
+                            <p class="mb-0" style="font-size:.6rem; color:#787d81;">Section Heading — Roboto 700 — 1.5rem</p>
+                        </div>
+                        <div class="mb-2 pb-2" style="border-bottom:1px solid #2a2a2a;">
+                            <p style="font-family:'Roboto',sans-serif; font-size:.75rem; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:#7eb5be;" class="mb-0">Featured Projects</p>
+                            <p class="mb-0" style="font-size:.6rem; color:#787d81;">Section Label — Roboto 700 Uppercase — 0.75rem</p>
+                        </div>
+                        <div class="mb-2 pb-2" style="border-bottom:1px solid #2a2a2a;">
+                            <p style="font-family:'Roboto',sans-serif; font-size:.9rem; font-weight:400; color:#f3f7f6;" class="mb-0">Minimal, functional design with a refined and consistent finish.</p>
+                            <p class="mb-0" style="font-size:.6rem; color:#787d81;">Body Copy — Roboto 400 — 0.9rem</p>
+                        </div>
+                        <div class="mb-2 pb-2" style="border-bottom:1px solid #2a2a2a;">
+                            <p style="font-family:'Roboto',sans-serif; font-size:.8rem; font-weight:300; font-style:italic; color:#787d81;" class="mb-0">Interactive Media Design — Algonquin College</p>
+                            <p class="mb-0" style="font-size:.6rem; color:#787d81;">Muted / Secondary — Roboto 300 Italic — 0.8rem</p>
+                        </div>
+                        <div>
+                            <p style="font-family:'Roboto',sans-serif; font-size:.85rem; font-weight:500; color:#f3f7f6;" class="mb-0 d-inline-block px-3 py-1 rounded-pill" style="background:#005f6b;">View My Projects →</p>
+                            <p class="mb-0" style="font-size:.6rem; color:#787d81;">Button / CTA — Roboto 500 — 0.85rem</p>
+                        </div>
+                    </div>
+
+                    <!-- Type hierarchy table -->
                     <div class="p-2 rounded" style="background:#1a1a1a;">
-                        <p class="small fw-bold mb-1">Type hierarchy (as implemented on the portfolio):</p>
+                        <p class="small fw-bold mb-1">Type hierarchy summary:</p>
                         <table class="table table-dark table-sm mb-0">
                             <thead>
                                 <tr>
                                     <th>Element</th>
                                     <th>Font</th>
                                     <th>Weight</th>
-                                    <th>Example</th>
+                                    <th>Size</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr><td>Wordmark</td><td>Roboto Mono</td><td>700</td><td>K-</td></tr>
-                                <tr><td>Hero display</td><td>Roboto Mono</td><td>700</td><td>"Digital" / "portfolio"</td></tr>
-                                <tr><td>Section label</td><td>Roboto</td><td>700 uppercase</td><td>FEATURED PROJECTS</td></tr>
-                                <tr><td>Section heading</td><td>Roboto</td><td>700</td><td>"Recent UX and web builds"</td></tr>
-                                <tr><td>Body copy</td><td>Roboto</td><td>400</td><td>Paragraph text</td></tr>
-                                <tr><td>Muted / secondary</td><td>Roboto</td><td>300 italic</td><td>Taglines, descriptions</td></tr>
-                                <tr><td>Navigation</td><td>Roboto</td><td>400</td><td>Home, Projects, Resume</td></tr>
-                                <tr><td>Buttons / CTAs</td><td>Roboto</td><td>500</td><td>"View My Projects"</td></tr>
+                                <tr><td>Wordmark</td><td>Roboto Mono</td><td>700</td><td>4rem</td></tr>
+                                <tr><td>Hero display</td><td>Roboto Mono</td><td>700</td><td>2.5rem</td></tr>
+                                <tr><td>Section label</td><td>Roboto</td><td>700 uppercase</td><td>0.75rem</td></tr>
+                                <tr><td>Section heading</td><td>Roboto</td><td>700</td><td>1.5rem</td></tr>
+                                <tr><td>Body copy</td><td>Roboto</td><td>400</td><td>0.9rem</td></tr>
+                                <tr><td>Muted / secondary</td><td>Roboto</td><td>300 italic</td><td>0.8rem</td></tr>
+                                <tr><td>Navigation</td><td>Roboto</td><td>400</td><td>0.9rem</td></tr>
+                                <tr><td>Buttons / CTAs</td><td>Roboto</td><td>500</td><td>0.85rem</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -385,7 +485,7 @@
     <!-- =====================================================================
          PAGE 7 - BRAND APPLICATION
          ===================================================================== -->
-    <div class="bp-page" data-page-bg="light">
+    <div class="bp-page bp-application" data-page-bg="light">
         <div class="bp-page-inner">
             <p class="text-uppercase secondary fw-bold mb-2">Brand Application</p>
             <h2 class="fw-bold mb-3">Portfolio Homepage - Live Implementation</h2>
@@ -444,9 +544,9 @@
     </div>
 
     <!-- =====================================================================
-         PAGE 8 - INVOICE (top half)
+         PAGE 8 - BRAND INVOICE (Line Items)
          ===================================================================== -->
-    <div class="bp-page" data-page-bg="white">
+    <div class="bp-page bp-invoice-items" data-page-bg="white">
         <div class="bp-page-inner">
             <!-- Invoice header -->
             <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-2">
@@ -556,9 +656,9 @@
     </div>
 
     <!-- =====================================================================
-         PAGE 9 - INVOICE (totals, payment, signature)
+         PAGE 9 - BRAND INVOICE (Totals)
          ===================================================================== -->
-    <div class="bp-page" data-page-bg="white">
+    <div class="bp-page bp-invoice-totals" data-page-bg="white">
         <div class="bp-page-inner">
             <div class="d-flex justify-content-between align-items-start mb-3">
                 <div>
@@ -647,8 +747,8 @@
         // Switch to print mode - each .bp-page becomes exactly US Letter sized
         document.body.classList.add('print-mode');
 
-        // Wait for reflow
-        await new Promise(r => setTimeout(r, 100));
+        // Wait for reflow + images to settle
+        await new Promise(r => setTimeout(r, 500));
 
         // US Letter: 215.9mm x 279.4mm
         const { jsPDF } = window.jspdf;
